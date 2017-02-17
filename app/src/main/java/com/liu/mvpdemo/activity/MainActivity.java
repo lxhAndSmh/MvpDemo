@@ -1,7 +1,9 @@
-package com.liu.mvpdemo;
+package com.liu.mvpdemo.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.liu.mvpdemo.R;
 
 public class MainActivity extends AppCompatActivity {
 
