@@ -12,13 +12,62 @@ package com.liu.mvpdemo.bean;
 
 public class Task {
 
-    public String mId;
+    private String mId;
 
-    public String mTitle;
+    private String mTitle;
 
-    public String mDescription;
+    private String mDescription;
 
-    public boolean mCompleted;
+    private boolean mCompleted;
+
+    public Task(String mId, String mTitle, String mDescription, boolean mCompleted) {
+        this.mId = mId;
+        this.mTitle = mTitle;
+        this.mDescription = mDescription;
+        this.mCompleted = mCompleted;
+    }
+
+    public Task(String mId, String mTitle, String mDescription) {
+        this.mId = mId;
+        this.mTitle = mTitle;
+        this.mDescription = mDescription;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public void setId(String mId) {
+        this.mId = mId;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String mDescription) {
+        this.mDescription = mDescription;
+    }
+
+    public boolean isCompleted() {
+        return mCompleted;
+    }
+
+    public boolean isActive() {
+        return !mCompleted;
+    }
+
+    public void setCompleted(boolean mCompleted) {
+        this.mCompleted = mCompleted;
+    }
 
     @Override
     public String toString() {

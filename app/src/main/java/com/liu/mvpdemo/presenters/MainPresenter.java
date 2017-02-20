@@ -6,6 +6,12 @@ import com.liu.mvpdemo.bean.Task;
 import com.liu.mvpdemo.constant.TasksFilterType;
 import com.liu.mvpdemo.contracts.MainContract;
 import com.liu.mvpdemo.data.TasksDataManager;
+import com.liu.mvpdemo.data.TasksDataSource;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 项目名称：MvpDemo
@@ -23,54 +29,142 @@ public class MainPresenter implements MainContract.Presenter {
 
     private final MainContract.View mMainView;
 
+    private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
+
+    private boolean mFirstLoad = true;
+
     public MainPresenter(TasksDataManager mTasksDataManager, MainContract.View mMainView) {
-        this.mTasksDataManager = mTasksDataManager;
-        this.mMainView = mMainView;
+        this.mTasksDataManager = checkNotNull(mTasksDataManager, "数据管理类不能为空");
+        this.mMainView = checkNotNull(mMainView, "mMainView 不能为空");
+
+        mMainView.setPresenter(this);
     }
 
 
     @Override
     public void loadTasks(boolean forceUpdate) {
-
+        loadTasks(forceUpdate || mFirstLoad, true);
+        mFirstLoad = false;
     }
 
     @Override
     public void addNewTask() {
-
+        mMainView.showAddTask();
     }
 
     @Override
     public void openTaskDetails(@NonNull Task requestTask) {
-
+        checkNotNull(requestTask, "requestTask cannot bu null");
+        mMainView.showTaskDetailsUi(requestTask.getId());
     }
 
     @Override
     public void completeTask(@NonNull Task completeTask) {
-
+        checkNotNull(completeTask, "completeTask cannot bu null");
+        mTasksDataManager.completeTask(completeTask);
+        mMainView.showTaskMarkedComplete();
+        loadTasks(false, false);
     }
 
     @Override
     public void activateTask(@NonNull Task activeTask) {
-
+        checkNotNull(activeTask, "activeTask cannot bu null");
+        mTasksDataManager.activeTask(activeTask);
+        mMainView.showTaskMarkedActive();
+        loadTasks(false, false);
     }
 
     @Override
     public void cleanCompletedTasks() {
-
+        mTasksDataManager.clearCompletedTasks();
+        mMainView.showCompletedTasksCleared();
+        loadTasks(false, false);
     }
 
     @Override
     public void setFiltering(TasksFilterType filterType) {
-
+        mCurrentFiltering = filterType;
     }
 
     @Override
     public TasksFilterType getFilterType() {
-        return null;
+        return mCurrentFiltering;
     }
 
     @Override
     public void start() {
+        loadTasks(false);
+    }
 
+    private void loadTasks(boolean forceUpdate, final boolean showLoadingUI) {
+        if (showLoadingUI) {
+            mMainView.setLoadingIndicator(true);
+        }
+        if (forceUpdate) {
+            mTasksDataManager.refreshTasks();
+        }
+
+        mTasksDataManager.getTasks(new TasksDataSource.LoadTaskCallback() {
+            @Override
+            public void onTasksLoaded(List<Task> tasks) {
+                List<Task> tasksToShow = new ArrayList<Task>();
+
+                for (Task task : tasks) {
+                    switch (mCurrentFiltering) {
+                        case ALL_TASKS:
+                            tasksToShow.add(task);
+                            break;
+                        case ACTIVE_TASKS:
+                            if (task.isActive()) {
+                                tasksToShow.add(task);
+                            }
+                            break;
+                        case COMPLETE_TASKS:
+                            if (task.isCompleted()) {
+                                tasksToShow.add(task);
+                            }
+                            break;
+                        default:
+                            tasksToShow.add(task);
+                            break;
+                    }
+                }
+                // The view may not be able to handle UI updates anymore
+                if (!mMainView.isActive()) {
+                    return;
+                }
+                if (showLoadingUI) {
+                    mMainView.setLoadingIndicator(false);
+                }
+
+                if(!tasksToShow.isEmpty()){
+                    mMainView.showTasks(tasksToShow);
+                    showFilterLabel();
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                // The view may not be able to handle UI updates anymore
+                if (!mMainView.isActive()) {
+                    return;
+                }
+                mMainView.showLoadingTasksError();
+            }
+        });
+    }
+
+    private void showFilterLabel() {
+        switch (mCurrentFiltering) {
+            case ACTIVE_TASKS:
+                mMainView.showActiveFilterLabel();
+                break;
+            case COMPLETE_TASKS:
+                mMainView.showCompletedFilterLabel();
+                break;
+            default:
+                mMainView.showAllFilterLabel();
+                break;
+        }
     }
 }

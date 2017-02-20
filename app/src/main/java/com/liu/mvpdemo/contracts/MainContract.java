@@ -67,11 +67,6 @@ public interface MainContract {
         void showNoTasks();
 
         /**
-         * 显示过滤条件的标签
-         */
-        void showAllFilterLabel();
-
-        /**
          * 显示保存成功的信息
          */
         void showSuccessfullySavedMessage();
@@ -86,7 +81,19 @@ public interface MainContract {
          */
         void showFilteringPopUpMenu();
 
+        /**
+         * 显示加载进度圈
+         */
+        void setLoadingIndicator(final boolean active);
 
+        /**
+         * 显示过滤条件的标签
+         */
+        void showAllFilterLabel();
+
+        void showActiveFilterLabel();
+
+        void showCompletedFilterLabel();
     }
 
     interface Presenter extends BasePresenter{
