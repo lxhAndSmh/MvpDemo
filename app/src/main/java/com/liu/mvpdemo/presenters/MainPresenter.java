@@ -62,7 +62,6 @@ public class MainPresenter implements MainContract.Presenter {
     public void completeTask(@NonNull Task completeTask) {
         checkNotNull(completeTask, "completeTask cannot bu null");
         mTasksDataManager.completeTask(completeTask);
-        mMainView.showTaskMarkedComplete();
         loadTasks(false, false);
     }
 
@@ -70,14 +69,12 @@ public class MainPresenter implements MainContract.Presenter {
     public void activateTask(@NonNull Task activeTask) {
         checkNotNull(activeTask, "activeTask cannot bu null");
         mTasksDataManager.activeTask(activeTask);
-        mMainView.showTaskMarkedActive();
         loadTasks(false, false);
     }
 
     @Override
     public void cleanCompletedTasks() {
         mTasksDataManager.clearCompletedTasks();
-        mMainView.showCompletedTasksCleared();
         loadTasks(false, false);
     }
 
@@ -129,10 +126,7 @@ public class MainPresenter implements MainContract.Presenter {
                             break;
                     }
                 }
-                // The view may not be able to handle UI updates anymore
-                if (!mMainView.isActive()) {
-                    return;
-                }
+
                 if (showLoadingUI) {
                     mMainView.setLoadingIndicator(false);
                 }
@@ -145,10 +139,6 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                // The view may not be able to handle UI updates anymore
-                if (!mMainView.isActive()) {
-                    return;
-                }
                 mMainView.showLoadingTasksError();
             }
         });

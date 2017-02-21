@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.adapter.clicklistener.MainRecyclerClickListener;
 import com.liu.mvpdemo.bean.Task;
 import com.liu.mvpdemo.viewholder.MainViewHolder;
 
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 项目名称：MvpDemo
@@ -22,29 +25,57 @@ import java.util.List;
  * 修改备注：
  */
 
-public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder> {
+public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder>{
 
     private Context context;
     private List<Task> tasks;
+    private MainRecyclerClickListener mClickListener;
 
     public MainRecyclerAdapter(Context context, List<Task> tasks) {
         this.context = context;
         this.tasks = tasks;
     }
 
+    public void setItemClickListener(MainRecyclerClickListener mClickListener){
+        this.mClickListener = mClickListener;
+    }
+
+    public void replaceData(List<Task> tasks){
+        this.tasks = checkNotNull(tasks);
+        notifyDataSetChanged();
+    }
+
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.task_item, null);
-        return new MainViewHolder(view);
+        return new MainViewHolder(view, mClickListener);
     }
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
+        final Task task = tasks.get(position);
+        holder.checkBox.setChecked(task.isCompleted());
+        if(task.isCompleted()){
+            holder.linearLayout.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.main_item_bg));
+        }else {
+            holder.linearLayout.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.touch_feedback));
+        }
 
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(task.isCompleted()){
+                    mClickListener.onActivateTaskClick(task);
+                }else {
+                    mClickListener.onCompleteTaskClick(task);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return tasks.size();
     }
+
 }

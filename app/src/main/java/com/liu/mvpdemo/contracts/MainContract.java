@@ -42,21 +42,6 @@ public interface MainContract {
         void showTaskDetailsUi(String taskId);
 
         /**
-         * 显示任务被标记完成
-         */
-        void showTaskMarkedComplete();
-
-        /**
-         * 显示有效的任务
-         */
-        void showTaskMarkedActive();
-
-        /**
-         * 显示清理已完成任务后的数据
-         */
-        void showCompletedTasksCleared();
-
-        /**
          * 显示加载任务失败的信息
          */
         void showLoadingTasksError();
@@ -65,16 +50,6 @@ public interface MainContract {
          * 显示无数据时的UI
          */
         void showNoTasks();
-
-        /**
-         * 显示保存成功的信息
-         */
-        void showSuccessfullySavedMessage();
-
-        /**
-         * 是否是有效的
-         */
-        boolean isActive();
 
         /**
          * 显示过滤条件的PopUpMenu
