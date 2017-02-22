@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.liu.mvpdemo.bean.Task;
 import com.liu.mvpdemo.constant.TasksFilterType;
 import com.liu.mvpdemo.contracts.MainContract;
-import com.liu.mvpdemo.data.TasksDataManager;
 import com.liu.mvpdemo.data.TasksDataSource;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainPresenter implements MainContract.Presenter {
 
-    private final TasksDataManager mTasksDataManager;
+    private final TasksDataSource mTasksDataManager;
 
     private final MainContract.View mMainView;
 
@@ -33,7 +32,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private boolean mFirstLoad = true;
 
-    public MainPresenter(TasksDataManager mTasksDataManager, MainContract.View mMainView) {
+    public MainPresenter(TasksDataSource mTasksDataManager, MainContract.View mMainView) {
         this.mTasksDataManager = checkNotNull(mTasksDataManager, "数据管理类不能为空");
         this.mMainView = checkNotNull(mMainView, "mMainView 不能为空");
 

@@ -1,5 +1,8 @@
 package com.liu.mvpdemo.bean;
 
+
+import android.text.TextUtils;
+
 /**
  * 项目名称：MvpDemo
  * 类描述：
@@ -29,6 +32,11 @@ public class Task {
 
     public Task(String mId, String mTitle, String mDescription) {
         this.mId = mId;
+        this.mTitle = mTitle;
+        this.mDescription = mDescription;
+    }
+
+    public Task(String mTitle, String mDescription) {
         this.mTitle = mTitle;
         this.mDescription = mDescription;
     }
@@ -67,6 +75,11 @@ public class Task {
 
     public void setCompleted(boolean mCompleted) {
         this.mCompleted = mCompleted;
+    }
+
+    public boolean isEmpty() {
+        return TextUtils.isEmpty(mTitle) &&
+                TextUtils.isEmpty(mDescription);
     }
 
     @Override

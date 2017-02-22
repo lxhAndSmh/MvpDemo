@@ -13,7 +13,6 @@ import com.liu.mvpdemo.data.local.TasksPersistenceContract.TaskEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 项目名称：MvpDemo
@@ -32,7 +31,6 @@ public class TasksLocalDataSource implements TasksDataSource {
     private TasksDbHelper mDbHelper;
 
     private TasksLocalDataSource(@NonNull Context context) {
-        checkNotNull(context);
         mDbHelper = new TasksDbHelper(context);
     }
 
@@ -127,7 +125,6 @@ public class TasksLocalDataSource implements TasksDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
-        checkNotNull(task);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();

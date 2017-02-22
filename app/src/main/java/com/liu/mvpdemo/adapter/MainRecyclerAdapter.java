@@ -13,7 +13,6 @@ import com.liu.mvpdemo.viewholder.MainViewHolder;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 项目名称：MvpDemo
@@ -41,7 +40,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder>{
     }
 
     public void replaceData(List<Task> tasks){
-        this.tasks = checkNotNull(tasks);
+        this.tasks = tasks;
         notifyDataSetChanged();
     }
 
