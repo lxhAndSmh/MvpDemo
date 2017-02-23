@@ -3,6 +3,8 @@ package com.liu.mvpdemo.bean;
 
 import android.text.TextUtils;
 
+import java.util.UUID;
+
 /**
  * 项目名称：MvpDemo
  * 类描述：
@@ -23,7 +25,7 @@ public class Task {
 
     private boolean mCompleted;
 
-    public Task(String mId, String mTitle, String mDescription, boolean mCompleted) {
+    public Task(String mTitle, String mDescription, String mId, boolean mCompleted) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mDescription = mDescription;
@@ -31,14 +33,11 @@ public class Task {
     }
 
     public Task(String mId, String mTitle, String mDescription) {
-        this.mId = mId;
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
+        this(mTitle, mDescription, mId, false);
     }
 
     public Task(String mTitle, String mDescription) {
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
+        this(mTitle, mDescription, UUID.randomUUID().toString(), false);
     }
 
     public String getId() {

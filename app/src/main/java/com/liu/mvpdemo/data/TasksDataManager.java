@@ -123,7 +123,6 @@ public class TasksDataManager implements TasksDataSource{
 
         Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
 
-        // Do in memory cache update to keep the app UI up to date
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
         }
@@ -141,9 +140,8 @@ public class TasksDataManager implements TasksDataSource{
         checkNotNull(task);
         localDataSource.activeTask(task);
 
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
+        Task activeTask = new Task(task.getId(), task.getTitle(), task.getDescription());
 
-        // Do in memory cache update to keep the app UI up to date
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
         }
@@ -171,11 +169,6 @@ public class TasksDataManager implements TasksDataSource{
                 it.remove();
             }
         }
-    }
-
-    @Override
-    public void refreshTasks() {
-
     }
 
     @Override

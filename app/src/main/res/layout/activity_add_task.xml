@@ -23,28 +23,40 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/ed_title"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="11dp"
-        android:hint="请输入标题"
-        android:lines="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/ed_content"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:padding="11dp"
-        android:gravity="top"
-        android:hint="请输入你的任务"
-        />
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/ed_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="11dp"
+                    android:hint="请输入标题"
+                    android:lines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    />
+
+                <EditText
+                    android:id="@+id/ed_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:padding="11dp"
+                    android:gravity="top"
+                    android:hint="请输入你的任务"
+                    android:layout_below="@+id/ed_title"
+                    />
+            </RelativeLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_save"
@@ -52,9 +64,10 @@
             android:layout_height="wrap_content"
             app:fabSize="normal"
             android:src="@drawable/ic_done"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
+            android:layout_margin="16dp"
+            app:layout_anchor="@id/scrollView"
+            app:layout_anchorGravity="bottom|right|end"
             />
-    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

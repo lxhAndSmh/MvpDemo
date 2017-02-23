@@ -191,11 +191,6 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void refreshTasks() {
-
-    }
-
-    @Override
     public void deleteAllTasks() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 

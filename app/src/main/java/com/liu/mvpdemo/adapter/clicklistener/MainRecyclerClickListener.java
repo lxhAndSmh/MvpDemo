@@ -17,4 +17,6 @@ public interface MainRecyclerClickListener extends RecyclerItemClickListener {
     void onCompleteTaskClick(Task completedTask);
 
     void onActivateTaskClick(Task activatedTask);
+
+    void onOpenTaskDetialClick(Task detailTask);
 }

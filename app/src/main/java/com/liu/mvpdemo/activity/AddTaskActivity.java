@@ -25,7 +25,7 @@ public class AddTaskActivity extends AppCompatActivity implements AddTaskContrac
     private AddTaskContract.Presenet mPresent;
     private TasksDataSource mDataManager;
 
-    @BindView(R.id.toobar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.ed_title)
     EditText edTitle;
@@ -38,12 +38,14 @@ public class AddTaskActivity extends AppCompatActivity implements AddTaskContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        ButterKnife.bind(this);
+
         toolbar.setTitle("新建任务");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        ButterKnife.bind(this);
+
         mDataManager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
         mPresent = new AddTaskPresenter(mDataManager, this);
 
@@ -78,5 +80,15 @@ public class AddTaskActivity extends AppCompatActivity implements AddTaskContrac
     @Override
     public void setPresenter(@NonNull AddTaskContract.Presenet presenter) {
 //        mPresent = presenter;
+    }
+
+    /**
+     * ActionBar执行返回操作
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 }

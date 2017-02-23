@@ -51,6 +51,10 @@ public interface MainContract {
          */
         void showNoTasks();
 
+        void showNoActivedTasks();
+
+        void showNoCompletedTasks();
+
         /**
          * 显示过滤条件的PopUpMenu
          */

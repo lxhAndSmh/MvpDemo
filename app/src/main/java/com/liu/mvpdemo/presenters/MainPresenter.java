@@ -39,7 +39,11 @@ public class MainPresenter implements MainContract.Presenter {
         mMainView.setPresenter(this);
     }
 
-
+    /**
+     * 只处理本地数据，强制刷新功能暂时无效
+     *
+     * @param forceUpdate
+     */
     @Override
     public void loadTasks(boolean forceUpdate) {
         loadTasks(forceUpdate || mFirstLoad, true);
@@ -96,9 +100,6 @@ public class MainPresenter implements MainContract.Presenter {
         if (showLoadingUI) {
             mMainView.setLoadingIndicator(true);
         }
-        if (forceUpdate) {
-            mTasksDataManager.refreshTasks();
-        }
 
         mTasksDataManager.getTasks(new TasksDataSource.LoadTaskCallback() {
             @Override
@@ -130,9 +131,11 @@ public class MainPresenter implements MainContract.Presenter {
                     mMainView.setLoadingIndicator(false);
                 }
 
-                if(!tasksToShow.isEmpty()){
+                showFilterLabel();
+                if (!tasksToShow.isEmpty()) {
                     mMainView.showTasks(tasksToShow);
-                    showFilterLabel();
+                }else {
+                    showEmptyMessage();
                 }
             }
 
@@ -153,6 +156,20 @@ public class MainPresenter implements MainContract.Presenter {
                 break;
             default:
                 mMainView.showAllFilterLabel();
+                break;
+        }
+    }
+
+    private void showEmptyMessage() {
+        switch (mCurrentFiltering) {
+            case ACTIVE_TASKS:
+                mMainView.showNoActivedTasks();
+                break;
+            case COMPLETE_TASKS:
+                mMainView.showNoCompletedTasks();
+                break;
+            default:
+                mMainView.showNoTasks();
                 break;
         }
     }

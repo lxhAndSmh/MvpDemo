@@ -46,7 +46,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder>{
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.task_item, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.task_item, parent, false);
         return new MainViewHolder(view, mClickListener);
     }
 
@@ -70,6 +70,15 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder>{
                 }
             }
         });
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickListener.onOpenTaskDetialClick(task);
+            }
+        });
+
+        holder.tvTitle.setText(task.getTitle());
     }
 
     @Override

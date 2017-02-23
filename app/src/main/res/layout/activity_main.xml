@@ -58,6 +58,14 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:text="暂时没有任务哦"
+            />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fad_add_task"
             android:layout_width="wrap_content"
