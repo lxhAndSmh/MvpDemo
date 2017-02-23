@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
-
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.contracts.TaskDetailContract;
 import com.liu.mvpdemo.data.TasksDataManager;
@@ -18,6 +18,16 @@ import com.liu.mvpdemo.presenters.TaskDetailPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ * 项目名称：TaskDetailActivity
+ * 类描述：任务详情页的View
+ * 创建人：liuxuhui
+ * 创建时间：2017/2/23 下午10:58
+ * 修改人：liuxuhui
+ * 修改时间：2017/2/23 下午10:58
+ * 修改备注：
+ */
 public class TaskDetailActivity extends AppCompatActivity implements TaskDetailContract.View{
 
     @BindView(R.id.toolbar)
@@ -40,6 +50,11 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         setContentView(R.layout.activity_task_detail);
         ButterKnife.bind(this);
 
+        toolbar.setTitle("任务详情页");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
         initData();
     }
 
@@ -48,13 +63,19 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         manager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
         mPresenter = new TaskDetailPresenter(manager, this);
         mPresenter.setTaskId(taskId);
+        mPresenter.setDeatil();
 
-        toolbar.setTitle("任务详情页");
-        setSupportActionBar(toolbar);
+        checkBoxComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    mPresenter.setTaskCompleted(taskId);
+                }else {
+                    mPresenter.setTaskActived(taskId);
+                }
+            }
+        });
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -73,6 +94,10 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
+
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.menu_delete:
                 mPresenter.deleteTask();
                 break;

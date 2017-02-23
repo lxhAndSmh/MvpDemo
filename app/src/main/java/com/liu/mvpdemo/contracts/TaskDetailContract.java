@@ -2,6 +2,7 @@ package com.liu.mvpdemo.contracts;
 
 import com.liu.mvpdemo.base.BasePresenter;
 import com.liu.mvpdemo.base.BaseView;
+import com.liu.mvpdemo.bean.Task;
 
 /**
  * 项目名称：MvpDemo
@@ -28,10 +29,14 @@ public interface TaskDetailContract {
 
     interface Presenter extends BasePresenter{
 
-        void setTeatil();
+        void setDeatil();
 
         void deleteTask();
 
         void setTaskId(String taskId);
+
+        void setTaskCompleted(String taskId);
+
+        void setTaskActived(String taskId);
     }
 }

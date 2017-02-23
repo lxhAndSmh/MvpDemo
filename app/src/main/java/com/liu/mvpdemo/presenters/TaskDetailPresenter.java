@@ -28,7 +28,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     }
 
     @Override
-    public void setTeatil() {
+    public void setDeatil() {
         tasksDataManager.getTask(taskId, new TasksDataSource.GetTaskCallback(){
 
             @Override
@@ -54,6 +54,16 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     @Override
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    @Override
+    public void setTaskCompleted(String taskId) {
+        tasksDataManager.completeTask(taskId);
+    }
+
+    @Override
+    public void setTaskActived(String taskId) {
+        tasksDataManager.activeTask(taskId);
     }
 
     @Override

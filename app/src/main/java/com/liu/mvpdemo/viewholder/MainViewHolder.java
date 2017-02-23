@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * 修改备注：
  */
 
-public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class MainViewHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.complete)
     public CheckBox checkBox;
@@ -31,19 +31,9 @@ public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @BindView(R.id.linearLayout)
     public LinearLayout linearLayout;
 
-    private MainRecyclerClickListener itemClickListener;
-
-    public MainViewHolder(View itemView, MainRecyclerClickListener itemClickListener) {
+    public MainViewHolder(View itemView) {
         super(itemView);
-        this.itemClickListener = itemClickListener;
         ButterKnife.bind(this, itemView);
-        itemView.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        if(itemClickListener != null){
-            itemClickListener.onItemClick(view, getLayoutPosition());
-        }
-    }
 }

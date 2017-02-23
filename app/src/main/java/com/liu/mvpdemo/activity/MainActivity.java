@@ -89,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
 
             @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "=====item====" + position, Toast.LENGTH_SHORT).show();
+            public void onItemClick(int position) {
             }
         });
 
