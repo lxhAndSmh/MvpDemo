@@ -1,7 +1,10 @@
 package com.liu.mvpdemo.bean;
 
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import com.google.common.base.Strings;
 
 import java.util.UUID;
 
@@ -79,6 +82,15 @@ public class Task {
     public boolean isEmpty() {
         return TextUtils.isEmpty(mTitle) &&
                 TextUtils.isEmpty(mDescription);
+    }
+
+    @Nullable
+    public String getTitleForList() {
+        if (!Strings.isNullOrEmpty(mTitle)) {
+            return mTitle;
+        } else {
+            return mDescription;
+        }
     }
 
     @Override

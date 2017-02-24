@@ -78,7 +78,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainViewHolder>{
             }
         });
 
-        holder.tvTitle.setText(task.getTitle());
+        holder.tvTitle.setText(task.getTitleForList());
     }
 
     @Override
