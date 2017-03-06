@@ -141,6 +141,7 @@ public class MainPresenter implements MainContract.Presenter {
                     @Override
                     public void call(Throwable throwable) {
                         mMainView.showLoadingTasksError();
+                        mMainView.setLoadingIndicator(false);
                     }
                 }, new Action0() {
                     @Override
