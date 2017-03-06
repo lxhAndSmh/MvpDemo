@@ -156,8 +156,8 @@ public class MainPresenter implements MainContract.Presenter {
             showEmptyMessage();
         }else {
             mMainView.showTasks(tasks);
-            showFilterLabel();
         }
+        showFilterLabel();
     }
 
     private void showFilterLabel() {
