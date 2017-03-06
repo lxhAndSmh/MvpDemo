@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showLoadingTasksError() {
-
+        showEmptyMessage("加载失败");
     }
 
     @Override
