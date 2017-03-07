@@ -70,6 +70,7 @@ public class TasksDataManager implements TasksDataSource{
             @Override
             public void onDataNotAvailable() {
                 Log.d(TAG, "获取的tasks数据为空");
+                callback.onDataNotAvailable();
             }
         });
 

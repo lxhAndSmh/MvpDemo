@@ -10,12 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.adapter.MainRecyclerAdapter;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-            Toast.makeText(MainActivity.this, "=====刷新====", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "=====刷新=====");
         }
     }
 
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showLoadingTasksError() {
-
+        showEmptyMessage("加载失败");
     }
 
     @Override
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.start();
+        mPresenter.start();   //每次进入该页面，就重新请求数据
     }
 
     @Override
