@@ -6,6 +6,8 @@ import com.liu.mvpdemo.bean.Task;
 
 import java.util.List;
 
+import rx.Observable;
+
 /**
  * 项目名称：MvpDemo
  * 类描述：数据源接口.采用工厂模式，本地获取和远程获取数据的类都实现此接口（本Demo只采用本地获取的方式）
@@ -18,32 +20,16 @@ import java.util.List;
 
 public interface TasksDataSource {
 
-    interface LoadTaskCallback{
-
-        void onTasksLoaded(List<Task> tasks);
-
-        void onDataNotAvailable();
-    }
-
-    interface GetTaskCallback{
-
-        void onTaskLoaded(Task task);
-
-        void onDataNotAvailable();
-    }
-
     /**
      * 获取任务列表
-     * @param callback
      */
-    void getTasks(@NonNull LoadTaskCallback callback);
+    Observable<List<Task>> getTasks();
 
     /**
      * 获取对应id的任务
      * @param taskId
-     * @param callback
      */
-    void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback);
+    Observable<Task> getTask(@NonNull String taskId);
 
     void saveTask(@NonNull Task task);
 

@@ -1,9 +1,10 @@
 package com.liu.mvpdemo.presenters;
 
-import com.liu.mvpdemo.bean.Task;
 import com.liu.mvpdemo.contracts.TaskDetailContract;
 import com.liu.mvpdemo.data.TasksDataManager;
-import com.liu.mvpdemo.data.TasksDataSource;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 项目名称：MvpDemo
@@ -29,20 +30,14 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void setDeatil() {
-        tasksDataManager.getTask(taskId, new TasksDataSource.GetTaskCallback(){
-
-            @Override
-            public void onTaskLoaded(Task task) {
-                mView.showTitle(task.getTitle());
-                mView.showDescription(task.getDescription());
-                mView.showCheckBox(task.isCompleted());
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
+        tasksDataManager.getTask(taskId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(task -> {
+                    mView.showTitle(task.getTitle());
+                    mView.showDescription(task.getDescription());
+                    mView.showCheckBox(task.isCompleted());
+                });
     }
 
     @Override

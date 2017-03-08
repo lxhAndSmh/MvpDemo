@@ -2,15 +2,18 @@ package com.liu.mvpdemo.data;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.liu.mvpdemo.bean.Task;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -24,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 修改备注：
  */
 
-public class TasksDataManager implements TasksDataSource{
+public class TasksDataManager implements TasksDataSource {
 
     private static final String TAG = TasksDataManager.class.getSimpleName();
 
@@ -39,70 +42,65 @@ public class TasksDataManager implements TasksDataSource{
         this.localDataSource = checkNotNull(localDataSource);
     }
 
-    public static TasksDataManager getInstance(TasksDataSource tasksLocalData){
-        if(INSTANCE == null){
+    public static TasksDataManager getInstance(TasksDataSource tasksLocalData) {
+        if (INSTANCE == null) {
             INSTANCE = new TasksDataManager(tasksLocalData);
         }
         return INSTANCE;
     }
 
-    public static void destoryInstance(){
+    public static void destoryInstance() {
         INSTANCE = null;
     }
 
     @Override
-    public void getTasks(@NonNull final LoadTaskCallback callback) {
+    public Observable<List<Task>> getTasks() {
 
-        checkNotNull(callback);
-
-        if(mCachedTasks != null){
-            callback.onTasksLoaded(new ArrayList<Task>(mCachedTasks.values()));
-            return;
+        if (mCachedTasks != null) {
+            return Observable.from(mCachedTasks.values()).toList();
         }
 
-        localDataSource.getTasks(new LoadTaskCallback() {
-            @Override
-            public void onTasksLoaded(List<Task> tasks) {
-                refreshCache(tasks);
-                callback.onTasksLoaded(new ArrayList<Task>(mCachedTasks.values()));
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                Log.d(TAG, "获取的tasks数据为空");
-                callback.onDataNotAvailable();
-            }
-        });
+        return localDataSource.getTasks()
+                .flatMap(new Func1<List<Task>, Observable<List<Task>>>() {
+                    @Override
+                    public Observable<List<Task>> call(List<Task> tasks) {
+                        return Observable.from(tasks)
+                                .doOnNext(new Action1<Task>() {
+                                    @Override
+                                    public void call(Task task) {
+                                        mCachedTasks.put(task.getId(), task);
+                                    }
+                                }).toList();
+                    }
+                }).filter(new Func1<List<Task>, Boolean>() {
+                    @Override
+                    public Boolean call(List<Task> tasks) {
+                        return tasks.isEmpty();
+                    }
+                }).first();
 
     }
 
     @Override
-    public void getTask(@NonNull final String taskId, @NonNull final GetTaskCallback callback) {
+    public Observable<Task> getTask(@NonNull final String taskId) {
         checkNotNull(taskId);
-        checkNotNull(callback);
 
         Task cachedTask = getTaskWithId(taskId);
 
         if (cachedTask != null) {
-            callback.onTaskLoaded(cachedTask);
-            return;
+            return Observable.just(cachedTask);
         }
 
-        localDataSource.getTask(taskId, new GetTaskCallback() {
-            @Override
-            public void onTaskLoaded(Task task) {
-                if (mCachedTasks == null) {
-                    mCachedTasks = new LinkedHashMap<>();
-                }
-                mCachedTasks.put(task.getId(), task);
-                callback.onTaskLoaded(task);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                Log.d(TAG, "获取的task数据为空");
-            }
-        });
+        return getTask(taskId).first()
+                .map(new Func1<Task, Task>() {
+                    @Override
+                    public Task call(Task task) {
+                        if(task == null){
+                            throw  new NoSuchElementException("No task found wih taskId " + taskId);
+                        }
+                        return task;
+                    }
+                });
     }
 
     @Override
@@ -207,5 +205,14 @@ public class TasksDataManager implements TasksDataSource{
         } else {
             return mCachedTasks.get(id);
         }
+    }
+
+    Observable<Task> getTaskWithIdFromLocalRepository(final String taskId){
+        return localDataSource.getTask(taskId).doOnNext(new Action1<Task>() {
+            @Override
+            public void call(Task task) {
+                mCachedTasks.put(taskId, task);
+            }
+        }).first();
     }
 }
