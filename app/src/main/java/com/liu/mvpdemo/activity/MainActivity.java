@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showAddTask() {
-        Intent intent = new Intent(this, AddTaskActivity.class);
+        Intent intent = new Intent(this, QuickIndexActivity.class);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
