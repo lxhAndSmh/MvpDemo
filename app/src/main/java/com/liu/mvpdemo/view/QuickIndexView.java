@@ -104,7 +104,7 @@ public class QuickIndexView extends View {
 
         Rect textRect = new Rect();
         mPaint.getTextBounds(mTexts[0], 0, mTexts[0].length(), textRect);
-        int tempHeight = textRect.height() + 2 * mGap;
+        int tempHeight = textRect.height();
         if (heightMode == MeasureSpec.EXACTLY) {
             height = realHeight;
         } else {
@@ -122,7 +122,7 @@ public class QuickIndexView extends View {
         }
 
         createRect(width, height);
-        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(), height + getPaddingTop() + getPaddingBottom());
+        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(), height + getPaddingTop() + dpToPx(60, getResources()) + getPaddingBottom());
     }
 
     private void createRect(int width, int height) {
@@ -146,7 +146,7 @@ public class QuickIndexView extends View {
 
             RectF rect = mTextRects[i];
             rect.left = getPaddingLeft() + i * cellWeight;
-            rect.top = getPaddingTop() + mGap;
+            rect.top = getPaddingTop() + dpToPx(60, getResources());
             rect.right = rect.left + cellWeight;
             rect.bottom = rect.top + height;
         }
@@ -156,7 +156,6 @@ public class QuickIndexView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                setBackgroundResource(R.drawable.quick_index__bg);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -203,9 +202,9 @@ public class QuickIndexView extends View {
                 mPaint.setColor(mTextColor);
             } else {
                 mPaint.setColor(mSelectedColor);
-                RectF rectF = new RectF();
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.text_select);
-                canvas.drawBitmap(bitmap, rect.centerX() - dpToPx(40, getResources()), rect.centerY() - dpToPx(60, getResources()), null);
+                canvas.drawBitmap(bitmap, rect.centerX() - dpToPx(18, getResources()), rect.centerY() - dpToPx(60, getResources()), null);
+                canvas.drawText(mTexts[i], rect.centerX(), rect.centerY() - dpToPx(38, getResources()), mPaint);
             }
             canvas.drawText(mTexts[i], rect.centerX() , rect.centerY(), mPaint);
         }
