@@ -7,8 +7,14 @@ import com.liu.mvpdemo.constant.TasksFilterType;
 import com.liu.mvpdemo.contracts.MainContract;
 import com.liu.mvpdemo.data.TasksDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -101,49 +107,57 @@ public class MainPresenter implements MainContract.Presenter {
             mMainView.setLoadingIndicator(true);
         }
 
-        mTasksDataManager.getTasks(new TasksDataSource.LoadTaskCallback() {
-            @Override
-            public void onTasksLoaded(List<Task> tasks) {
-                List<Task> tasksToShow = new ArrayList<Task>();
-
-                for (Task task : tasks) {
-                    switch (mCurrentFiltering) {
-                        case ALL_TASKS:
-                            tasksToShow.add(task);
-                            break;
-                        case ACTIVE_TASKS:
-                            if (task.isActive()) {
-                                tasksToShow.add(task);
-                            }
-                            break;
-                        case COMPLETE_TASKS:
-                            if (task.isCompleted()) {
-                                tasksToShow.add(task);
-                            }
-                            break;
-                        default:
-                            tasksToShow.add(task);
-                            break;
+        mTasksDataManager
+                .getTasks()
+                .flatMap(new Func1<List<Task>, Observable<Task>>() {
+                    @Override
+                    public Observable<Task> call(List<Task> tasks) {
+                        return Observable.from(tasks);
                     }
-                }
+                })
+                .filter(new Func1<Task, Boolean>() {
+                    @Override
+                    public Boolean call(Task task) {
+                        switch (mCurrentFiltering) {
+                            case ACTIVE_TASKS:
+                                return task.isActive();
+                            case COMPLETE_TASKS:
+                                return task.isCompleted();
+                            case ALL_TASKS:
+                            default:
+                                return true;
+                        }
+                    }
+                })
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Task>>() {
+                    @Override
+                    public void call(List<Task> tasks) {
+                        processTasks(tasks);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mMainView.showLoadingTasksError();
+                        mMainView.setLoadingIndicator(false);
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mMainView.setLoadingIndicator(false);
+                    }
+                });
+    }
 
-                if (showLoadingUI) {
-                    mMainView.setLoadingIndicator(false);
-                }
-
-                showFilterLabel();
-                if (!tasksToShow.isEmpty()) {
-                    mMainView.showTasks(tasksToShow);
-                }else {
-                    showEmptyMessage();
-                }
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                mMainView.showLoadingTasksError();
-            }
-        });
+    private void processTasks(List<Task> tasks){
+        if(tasks.isEmpty()){
+            showEmptyMessage();
+        }else {
+            mMainView.showTasks(tasks);
+        }
+        showFilterLabel();
     }
 
     private void showFilterLabel() {
