@@ -10,15 +10,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AddTaskActivity" />
-        <activity android:name=".activity.TaskDetailActivity" />
-        <activity android:name=".activity.QuickIndexActivity"
-            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
