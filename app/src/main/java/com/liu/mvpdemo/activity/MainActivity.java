@@ -1,5 +1,6 @@
 package com.liu.mvpdemo.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -57,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 initFlowableCreate();
                 break;
             case R.id.text2:
-                initMaybe();
+                Intent intent = new Intent(this, DisposableExampleActivity.class);
+                startActivity(intent);
+//                initMaybe();
                 break;
             default:
                 break;
