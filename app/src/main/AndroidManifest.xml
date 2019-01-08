@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.operators.DisposableExampleActivity"></activity>
+        <activity android:name=".activity.operators.DisposableExampleActivity" />
+        <activity android:name=".activity.operators.FlowableExampleActivity"></activity>
     </application>
 
 </manifest>

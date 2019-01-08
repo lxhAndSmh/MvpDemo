@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
+import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -49,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
         mStringBuilder = new StringBuilder();
     }
 
-    @OnClick({R.id.text, R.id.text1, R.id.text2})
+    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4})
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.text:
                 initFlowable();
@@ -59,9 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 initFlowableCreate();
                 break;
             case R.id.text2:
-                Intent intent = new Intent(this, DisposableExampleActivity.class);
+                initMaybe();
+                break;
+            case R.id.text3:
+                intent = new Intent(this, DisposableExampleActivity.class);
                 startActivity(intent);
-//                initMaybe();
+                break;
+            case R.id.text4:
+                intent = new Intent(this, FlowableExampleActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

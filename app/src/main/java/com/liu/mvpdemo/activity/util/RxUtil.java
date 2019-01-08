@@ -1,6 +1,7 @@
 package com.liu.mvpdemo.activity.util;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -16,6 +17,11 @@ public class RxUtil {
      * @return 返回一个通用的调度器
      */
     public static <T> ObservableTransformer<T, T> applyObservableThread() {
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static <T>SingleTransformer<T, T> applySingleThread() {
         return upstream -> upstream.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
