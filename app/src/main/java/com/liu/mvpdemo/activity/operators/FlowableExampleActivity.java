@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.activity.util.ConstantValues;
 import com.liu.mvpdemo.activity.util.RxUtil;
 
 import butterknife.BindView;
@@ -25,7 +26,6 @@ import io.reactivex.functions.BiFunction;
  * @date 2019/1/8
  */
 public class FlowableExampleActivity extends AppCompatActivity {
-    public static String TAG = "FlowableExampleActivity";
 
     @BindView(R.id.textView)
     TextView textView;
@@ -51,20 +51,20 @@ public class FlowableExampleActivity extends AppCompatActivity {
                 .subscribe(new SingleObserver<Integer>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: " + d.isDisposed());
+                        Log.d(ConstantValues.TAG, "onSubscribe: " + d.isDisposed());
                     }
 
                     @Override
                     public void onSuccess(Integer integer) {
                         textView.append("onSuccess : value: " + integer + "\n");
-                        Log.d(TAG,"onSuccess : value: " + integer);
+                        Log.d(ConstantValues.TAG,"onSuccess : value: " + integer);
                         //输出的值是60
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         textView.append("onError: " + e.getMessage());
-                        Log.d(TAG, "onError: " + e.getMessage());
+                        Log.d(ConstantValues.TAG, "onError: " + e.getMessage());
                     }
                 });
         Flowable.just(2, 2, 3, 4)
@@ -77,25 +77,25 @@ public class FlowableExampleActivity extends AppCompatActivity {
                 .subscribe(new MaybeObserver<Integer>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: " + d.isDisposed());
+                        Log.d(ConstantValues.TAG, "onSubscribe: " + d.isDisposed());
                     }
 
                     @Override
                     public void onSuccess(Integer integer) {
                         textView.append("onSuccess : value: " + integer + "\n");
-                        Log.d(TAG,"onSuccess : value: " + integer);
+                        Log.d(ConstantValues.TAG,"onSuccess : value: " + integer);
                         //输出的值是11
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         textView.append("onError: " + e.getMessage());
-                        Log.d(TAG, "onError: " + e.getMessage());
+                        Log.d(ConstantValues.TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete:");
+                        Log.d(ConstantValues.TAG, "onComplete:");
                     }
                 });
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.activity.util.ConstantValues;
 import com.liu.mvpdemo.activity.util.RxUtil;
 
 import java.util.concurrent.Callable;
@@ -34,7 +35,6 @@ import io.reactivex.observers.DisposableObserver;
  * @date 2018/12/26
  */
 public class DisposableExampleActivity extends AppCompatActivity {
-    private static final String TAG = "DisposableActivity";
 
     @BindView(R.id.disposable_content_tv)
     TextView textView;
@@ -69,19 +69,19 @@ public class DisposableExampleActivity extends AppCompatActivity {
             public void onNext(String s) {
                 textView.append(s);
                 textView.append("\n");
-                Log.d(TAG, s +" ");
+                Log.d(ConstantValues.TAG, s +" ");
             }
 
             @Override
             public void onError(Throwable e) {
                 textView.append(e.getMessage());
-                Log.d(TAG, e.toString());
+                Log.d(ConstantValues.TAG, e.toString());
             }
 
             @Override
             public void onComplete() {
                 textView.append("onComplete");
-                Log.d(TAG, "onComplete");
+                Log.d(ConstantValues.TAG, "onComplete");
             }
         }));
     }
