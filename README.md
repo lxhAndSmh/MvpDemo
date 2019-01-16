@@ -1,4 +1,5 @@
 # Rxjava的使用（所有示例基于rxjava2.0）
+
 ### Disposable的使用
 [Disposable的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/DisposableExampleActivity.java)
 
@@ -12,6 +13,7 @@ CompositeDisposable的使用：快速接触所有添加的Disposable类，每当
 ### 使用Flowable和reduce操作
 reduce:按顺序对Observable发射的每项数据应用一个函数并发射最终的值。
 操作符对Observable发射数据的第一项应用到一个函数，然后再将返回的值与第二项数据一起传递给函数，以此类推，持续到最后一项数据并停止。并返回这个函数的最终值）
+
 ### Single的使用
 Single是Obserable的变种，它总是只发射一个值，或者一个错误的通知，而不是发射一系列的值。
 因此，订阅Single只需要两个方法：
@@ -38,3 +40,9 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 - subscribeOn: 返回Single，指示Single在指定的调度程序上执行操作
 - timeout: 返回Single，它给原有的Single添加超时控制，如果超时了就发射一个错误通知
 - zip and zipWith: 返回Single，将多个Single转换为一个，后者发射的数据是对前者应用一个函数后的结果
+
+###Completable的使用
+[Completable的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/CompletableObserverExampleActivity.java)
+
+用于不需要知道任何返回值，只需要知道是否结束或错误
+使用场景:例如请求接口更新服务端数据，我们只需要知道是否更新成功，不需要知道更新后返回的数据。

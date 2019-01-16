@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".activity.operators.DisposableExampleActivity" />
         <activity android:name=".activity.operators.FlowableExampleActivity" />
-        <activity android:name=".activity.operators.SingleObserverActivity"></activity>
+        <activity android:name=".activity.operators.SingleObserverActivity" />
+        <activity android:name=".activity.operators.CompletableObserverExampleActivity"></activity>
     </application>
 
 </manifest>

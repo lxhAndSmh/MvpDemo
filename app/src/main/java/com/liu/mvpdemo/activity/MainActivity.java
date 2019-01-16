@@ -1,22 +1,21 @@
 package com.liu.mvpdemo.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
-
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mStringBuilder = new StringBuilder();
     }
 
-    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5})
+    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -74,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.text5:
                 intent = new Intent(this, SingleObserverActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text6:
+                intent = new Intent(this, CompletableObserverExampleActivity.class);
                 startActivity(intent);
                 break;
             default:

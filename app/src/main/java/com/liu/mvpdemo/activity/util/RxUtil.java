@@ -1,5 +1,6 @@
 package com.liu.mvpdemo.activity.util;
 
+import io.reactivex.CompletableTransformer;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
@@ -27,7 +28,12 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T>FlowableTransformer<T, T> applyFlowableThread() {
+    public static <T> FlowableTransformer<T, T> applyFlowableThread() {
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static CompletableTransformer applyCompletableThread() {
         return upstream -> upstream.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
