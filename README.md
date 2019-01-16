@@ -37,5 +37,4 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 - onErrorReturn: 返回Single，将一个发射错误通知的Single转换成发射特定数据项的Single
 - subscribeOn: 返回Single，指示Single在指定的调度程序上执行操作
 - timeout: 返回Single，它给原有的Single添加超时控制，如果超时了就发射一个错误通知
-- toSingle: 返回Single，将一个发射单个值的Observable或者Flowable转换为一个Single
 - zip and zipWith: 返回Single，将多个Single转换为一个，后者发射的数据是对前者应用一个函数后的结果

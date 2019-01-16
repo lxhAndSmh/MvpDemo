@@ -11,6 +11,7 @@ import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.util.ConstantValues;
 import com.liu.mvpdemo.activity.util.RxUtil;
 
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 
 import java.util.concurrent.ExecutionException;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeoutException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -28,6 +30,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.SingleSource;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -37,6 +40,10 @@ import io.reactivex.observers.DisposableObserver;
  * onSuccess Single发射单个值到这个方法
  * onError 如果无法发射需要的值，Single发射一个Throwable对象到这个方法
  * Single只会调用这两个方法中的一个，而且只会调用一次，调用了任何一个方法之后，订阅关系终止
+ *
+ * 操作符的使用
+ * concat和merge的区别：concat是按被观察者的顺序一个接一个发送（例如，A被观察者 -> B被观察者 -> C被观察者）,
+ *                    merge：是将多个被观察者的所有数据整合到一起发送（例如，A被观察者的数据 + B被观察者的数据 = 顺序可能被打乱的所有的数据）
  * @author liuxuhui
  * @date 2019/1/11
  */
@@ -51,7 +58,7 @@ public class SingleObserverActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6})
+    @OnClick({R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7})
     public void doSomeWork(View view) {
         switch (view.getId()) {
             case R.id.button2:
@@ -68,6 +75,9 @@ public class SingleObserverActivity extends AppCompatActivity {
                 break;
             case R.id.button6:
                 singleMerge();
+                break;
+            case R.id.button7:
+                singleZip();
                 break;
             default:
                 break;
@@ -228,16 +238,23 @@ public class SingleObserverActivity extends AppCompatActivity {
 
     /**
      * merge and mergeWith:返回FlowableSubscriber，合并发射来自多个Single的数据
+     * timeout: 它给原有的Single添加超时控制，如果超时了就发送一个错误通知
+     * onErrorReturn:将一个发射错误通知的Single转换成一个发射指定数据项的Single
      */
     private void singleMerge() {
 
         Single<String> single = Single.create(f -> f.onSuccess("Hi"));
         Single<String> single1 = Single.create(f -> f.onSuccess(" girl!"));
         Single<String> single2 = Single.create(f -> f.onSuccess(" you"));
-        Single<String> single3 = Single.create(f -> f.onSuccess(" are"));
-        Single<String> single4 = Single.create(f -> f.onSuccess(" so"));
-        Single<String> single5 = Single.create(f -> f.onSuccess(" beautiful!"));
+        Single<String> single3 = Single.create(f -> f.onSuccess(" beautiful"));
         Single.merge(single, single1, single2, single3)
+//                .timeout(0, TimeUnit.SECONDS)
+//                .onErrorReturn(new Function<Throwable, String>() {
+//                    @Override
+//                    public String apply(Throwable throwable) throws Exception {
+//                        return "超时的错误信息";
+//                    }
+//                })
                 .compose(RxUtil.applyFlowableThread())
                 .subscribe(new FlowableSubscriber<String>() {
                     @Override
@@ -260,6 +277,40 @@ public class SingleObserverActivity extends AppCompatActivity {
                     @Override
                     public void onComplete() {
                         Log.d(ConstantValues.TAG, "onComplete");
+                    }
+                });
+    }
+
+    /**
+     * zip:将多个Single转换为一个，后者发射的数据是对前者应用一个函数的结果
+     */
+    private void singleZip() {
+        Single<String> single1 = Single.create(f -> f.onSuccess(" Lily is"));
+        Single<Integer> single2 = Single.create(f -> f.onSuccess(10));
+        Single<String> single3 = Single.create(f -> f.onSuccess("  years"));
+        Single.zip(single1, single2, single3, new Function3<String, Integer, String, String>() {
+            @Override
+            public String apply(String s, Integer s2, String s3) throws Exception {
+                return s + s2 + s3;
+            }
+        })
+                .compose(RxUtil.applySingleThread())
+                .subscribe(new SingleObserver<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(ConstantValues.TAG, "onSubscribe:" + d.isDisposed());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        textView.append(" " + s);
+                        Log.d(ConstantValues.TAG, "onSuccess:" + s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        textView.append(" error:" + e.getMessage());
+                        Log.d(ConstantValues.TAG, "onError:" + e.getMessage());
                     }
                 });
     }
