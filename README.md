@@ -41,8 +41,14 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 - timeout: 返回Single，它给原有的Single添加超时控制，如果超时了就发射一个错误通知
 - zip and zipWith: 返回Single，将多个Single转换为一个，后者发射的数据是对前者应用一个函数后的结果
 
-###Completable的使用
+##### Completable的使用
 [Completable的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/CompletableObserverExampleActivity.java)
 
 用于不需要知道任何返回值，只需要知道是否结束或错误
 使用场景:例如请求接口更新服务端数据，我们只需要知道是否更新成功，不需要知道更新后返回的数据。
+
+##### Map操作符的使用
+[Map的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/MapExampleActivity.java)
+
+Map操作符对原始Observable发射的每一项数据应用一个你选择的函数，然后返回一个发射这些结果的Observable。
+RxJava将这个操作符实现为map函数，这个操作符默认不在任何特定的调度器上执行。

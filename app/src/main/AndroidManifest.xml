@@ -18,7 +18,8 @@
         <activity android:name=".activity.operators.DisposableExampleActivity" />
         <activity android:name=".activity.operators.FlowableExampleActivity" />
         <activity android:name=".activity.operators.SingleObserverActivity" />
-        <activity android:name=".activity.operators.CompletableObserverExampleActivity"></activity>
+        <activity android:name=".activity.operators.CompletableObserverExampleActivity" />
+        <activity android:name=".activity.operators.MapExampleActivity"></activity>
     </application>
 
 </manifest>
