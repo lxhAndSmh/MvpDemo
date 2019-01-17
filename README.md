@@ -52,3 +52,9 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 
 Map操作符对原始Observable发射的每一项数据应用一个你选择的函数，然后返回一个发射这些结果的Observable。
 RxJava将这个操作符实现为map函数，这个操作符默认不在任何特定的调度器上执行。
+
+##### zip的使用
+[Zip的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ZipExampleActivity.java)
+
+zip操作符返回一个Observable,它使用这个函数按顺序结合两个或多个Observables发射的数据项，然后
+它发射这个函数返回的结果；zip的最后一个参数接收每个Observable发射的数据，返回被压缩后的数据（最多可以有九个Observable参数）

@@ -14,6 +14,7 @@ import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
+import com.liu.mvpdemo.activity.operators.ZipExampleActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mStringBuilder = new StringBuilder();
     }
 
-    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6, R.id.text7})
+    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6, R.id.text7, R.id.text8})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -82,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.text7:
                 intent = new Intent(this, MapExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text8:
+                intent = new Intent(this, ZipExampleActivity.class);
                 startActivity(intent);
                 break;
             default:

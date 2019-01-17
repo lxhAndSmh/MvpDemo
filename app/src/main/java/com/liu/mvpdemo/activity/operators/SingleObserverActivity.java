@@ -1,8 +1,8 @@
 package com.liu.mvpdemo.activity.operators;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +11,6 @@ import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.util.ConstantValues;
 import com.liu.mvpdemo.activity.util.RxUtil;
 
-import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 
 import java.util.concurrent.ExecutionException;
@@ -22,7 +21,6 @@ import java.util.concurrent.TimeoutException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.Observable;
 import io.reactivex.Single;
