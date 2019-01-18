@@ -14,6 +14,7 @@ import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
+import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
 import com.liu.mvpdemo.activity.operators.TakeExampleActivity;
 import com.liu.mvpdemo.activity.operators.ZipExampleActivity;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6, R.id.text7, R.id.text8
-    , R.id.text9, R.id.text10})
+    , R.id.text9, R.id.text10, R.id.text11, R.id.text12, R.id.text13, R.id.text14, R.id.text15})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -97,6 +98,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text10:
+                intent = new Intent(this, TakeExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text11:
+                intent = new Intent(this, ReduceExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text12:
+                intent = new Intent(this, MapExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text13:
+                intent = new Intent(this, ZipExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text14:
+                intent = new Intent(this, BufferExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text15:
                 intent = new Intent(this, TakeExampleActivity.class);
                 startActivity(intent);
                 break;

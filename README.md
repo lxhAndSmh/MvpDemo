@@ -10,9 +10,6 @@ Disposable类：
 CompositeDisposable的使用：快速接触所有添加的Disposable类，每当得到一个Disposable时就调用；
 - CompositeDisposable.add()：将Disposable添加到容器中
 - CompositeDisposable.clear():退出页面时调用该方法，可快速解除所有订阅
-### 使用Flowable和reduce操作
-reduce:按顺序对Observable发射的每项数据应用一个函数并发射最终的值。
-操作符对Observable发射数据的第一项应用到一个函数，然后再将返回的值与第二项数据一起传递给函数，以此类推，持续到最后一项数据并停止。并返回这个函数的最终值）
 
 ### Single的使用
 Single是Obserable的变种，它总是只发射一个值，或者一个错误的通知，而不是发射一系列的值。
@@ -47,17 +44,13 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 用于不需要知道任何返回值，只需要知道是否结束或错误
 使用场景:例如请求接口更新服务端数据，我们只需要知道是否更新成功，不需要知道更新后返回的数据。
 
+### 变换操作
+
 ##### Map操作符的使用
 [Map的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/MapExampleActivity.java)
 
 Map操作符对原始Observable发射的每一项数据应用一个你选择的函数，然后返回一个发射这些结果的Observable。
 RxJava将这个操作符实现为map函数，这个操作符默认不在任何特定的调度器上执行。
-
-##### Zip的使用
-[Zip的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ZipExampleActivity.java)
-
-zip操作符返回一个Observable,它使用这个函数按顺序结合两个或多个Observables发射的数据项，然后
-它发射这个函数返回的结果；zip的最后一个参数接收每个Observable发射的数据，返回被压缩后的数据（最多可以有九个Observable参数）
 
 ##### Buffer的使用
 [Buffer的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/BufferExampleActivity.java)
@@ -73,6 +66,16 @@ buffer(count, skip)从原始Observable的第一项数据开始创建新的缓存
 buffer(count) 不传skip时，缓存的数据不会有重叠,等效于传递一个count相同值的skip
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/buffer4.png)
 
+### 结合操作
+
+##### Zip的使用
+[Zip的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ZipExampleActivity.java)
+
+zip操作符返回一个Observable,它使用这个函数按顺序结合两个或多个Observables发射的数据项，然后
+它发射这个函数返回的结果；zip的最后一个参数接收每个Observable发射的数据，返回被压缩后的数据（最多可以有九个Observable参数）
+
+### 过滤操作
+
 ##### Take的使用
 [Take的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/TakeExampleActivity.java)
 
@@ -81,3 +84,24 @@ buffer(count) 不传skip时，缓存的数据不会有重叠,等效于传递一�
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.png)
 - 变体take(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable开始的那段时间发射的数据，时长和时间单位通过参数指定。
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.t.png)
+
+### 算术和聚合操作
+[算术和聚合操作的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ReduceExampleActivity.java)
+
+##### concat、concatWith和merge操作符
+
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/concat.c.png)
+
+- concat：不交错的发射两个或多个Observable发射的数据
+Concat操作符链接多个Observable的输出，第一个Observable发射的所有数据在第二个Observable发射的任何数据前面，以此类推。
+- merge操作符和concat差不多，它结合两个或多个Observable的发射物，但是数据可能交错，而Concat不会让多个Observable的发射物交错。
+- 还有一个实例方法叫concatWith，这两者是等价的：Observable.concat(a,b)和a.concatWith(b)。
+
+##### reduce操作符
+
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/reduce.c.png)
+- reduce(Func2): 按顺序对Observable发射的每项数据应用一个函数并发射最终的值。
+操作符对Observable发射数据的第一项应用到一个函数，然后再将返回的值与第二项数据一起传递给函数，以此类推，持续到最后一项数据并停止。并返回这个函数的最终值）
+注意：如果原始Observable没有发射任何数据，reduce抛出异常IllegalArgumentException
+- reduce(seed, Func2）：接受一个种子参数
+
