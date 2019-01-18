@@ -85,6 +85,14 @@ zip操作符返回一个Observable,它使用这个函数按顺序结合两个或
 - 变体take(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable开始的那段时间发射的数据，时长和时间单位通过参数指定。
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.t.png)
 
+##### Filter的使用
+[Filter的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/FilterExampleActivity.java)
+
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/filter.c.png)
+- Filter操作符，使用你指定的一个函数测试数据项，只有通过测试的数据才会发射。
+- ofType是filter操作符的一个特殊形式，它过滤一个Observable只返回指定类型的数据。
+
+
 ### 算术和聚合操作
 [算术和聚合操作的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ReduceExampleActivity.java)
 

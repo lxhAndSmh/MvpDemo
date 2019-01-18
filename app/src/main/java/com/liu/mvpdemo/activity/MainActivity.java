@@ -12,6 +12,7 @@ import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.operators.BufferExampleActivity;
 import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
+import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
 import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text12:
-                intent = new Intent(this, MapExampleActivity.class);
+                intent = new Intent(this, FilterExampleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text13:
