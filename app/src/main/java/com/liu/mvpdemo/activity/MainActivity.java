@@ -17,6 +17,7 @@ import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
 import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
+import com.liu.mvpdemo.activity.operators.SkipExampleActivity;
 import com.liu.mvpdemo.activity.operators.TakeExampleActivity;
 import com.liu.mvpdemo.activity.operators.ZipExampleActivity;
 
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text13:
-                intent = new Intent(this, ZipExampleActivity.class);
+                intent = new Intent(this, SkipExampleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text14:

@@ -92,6 +92,14 @@ zip操作符返回一个Observable,它使用这个函数按顺序结合两个或
 - Filter操作符，使用你指定的一个函数测试数据项，只有通过测试的数据才会发射。
 - ofType是filter操作符的一个特殊形式，它过滤一个Observable只返回指定类型的数据。
 
+##### Skip的使用
+[Skip的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/SkipExampleActivity.java)
+
+- skip(int): 你可以忽略Observable发射的前N项数据，只保留之后的数据。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skip.c.png)
+- skip（long, TimeUnit): skip的变体，这个变体接收一个时长，而不是数量参数。它会丢弃原始Observable开始的那段时间发射的数据，时长和时间单位通过参数指定
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skip.t.png)
+
 
 ### 算术和聚合操作
 [算术和聚合操作的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ReduceExampleActivity.java)
