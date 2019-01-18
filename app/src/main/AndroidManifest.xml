@@ -21,7 +21,8 @@
         <activity android:name=".activity.operators.CompletableObserverExampleActivity" />
         <activity android:name=".activity.operators.MapExampleActivity" />
         <activity android:name=".activity.operators.ZipExampleActivity" />
-        <activity android:name=".activity.operators.BufferExampleActivity"></activity>
+        <activity android:name=".activity.operators.BufferExampleActivity" />
+        <activity android:name=".activity.operators.TakeExampleActivity"></activity>
     </application>
 
 </manifest>

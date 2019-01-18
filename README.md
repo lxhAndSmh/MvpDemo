@@ -53,13 +53,13 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 Map操作符对原始Observable发射的每一项数据应用一个你选择的函数，然后返回一个发射这些结果的Observable。
 RxJava将这个操作符实现为map函数，这个操作符默认不在任何特定的调度器上执行。
 
-##### zip的使用
+##### Zip的使用
 [Zip的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ZipExampleActivity.java)
 
 zip操作符返回一个Observable,它使用这个函数按顺序结合两个或多个Observables发射的数据项，然后
 它发射这个函数返回的结果；zip的最后一个参数接收每个Observable发射的数据，返回被压缩后的数据（最多可以有九个Observable参数）
 
-##### buffer的使用
+##### Buffer的使用
 [Buffer的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/BufferExampleActivity.java)
 定期收集Observable的数据放进一个数据包裹，然后发射这些数据包裹，而不是一次发射一个值。
 Buffer操作符将一个Observable变换成另一个，原来的Observable正常发射数据，变换产生的Observable发射这些数据的缓存集合；
@@ -72,3 +72,12 @@ buffer(count, skip)从原始Observable的第一项数据开始创建新的缓存
 然后以列表List的形式发射缓存，这些缓存可能有重叠部分（比如skip < count时），也可能有间隙（如：skip > count时)
 buffer(count) 不传skip时，缓存的数据不会有重叠,等效于传递一个count相同值的skip
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/buffer4.png)
+
+##### Take的使用
+[Take的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/TakeExampleActivity.java)
+
+- take(n): 使用Take操作符可以修改Observable的行为，只发射前面的N项数据,然后发射完成通知，忽略剩余的数据。
+(如果Observable发射的数据少于N项，take操作生成的Observable不会抛异常或发射onError通知，它会发射相同的少量数据)
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.png)
+- 变体take(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable开始的那段时间发射的数据，时长和时间单位通过参数指定。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.t.png)
