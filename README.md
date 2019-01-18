@@ -84,6 +84,9 @@ zip操作符返回一个Observable,它使用这个函数按顺序结合两个或
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.png)
 - 变体take(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable开始的那段时间发射的数据，时长和时间单位通过参数指定。
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/take.t.png)
+- akeLast（int）操作符：发射Observable的最后N项数据
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/takeLast.c.png)
+- 变体takeLast(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable结束的那段时间发射的数据，时长和时间单位通过参数指定。
 
 ##### Filter的使用
 [Filter的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/FilterExampleActivity.java)
@@ -99,6 +102,10 @@ zip操作符返回一个Observable,它使用这个函数按顺序结合两个或
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skip.c.png)
 - skip（long, TimeUnit): skip的变体，这个变体接收一个时长，而不是数量参数。它会丢弃原始Observable开始的那段时间发射的数据，时长和时间单位通过参数指定
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skip.t.png)
+- skipLast(int): 你可以忽略Observable发射的后N项数据，只保留之前的数据。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipLast.c.png)
+- skipLast（long, TimeUnit): skipLast的变体，这个变体接收一个时长，而不是数量参数。它会丢弃原始Observable结束的那段时间发射的数据，时长和时间单位通过参数指定
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipLast.t.png)
 
 
 ### 算术和聚合操作

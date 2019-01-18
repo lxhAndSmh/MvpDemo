@@ -42,7 +42,7 @@ public class SkipExampleActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.text, R.id.text1})
+    @OnClick({R.id.text, R.id.text1, R.id.text2})
     public void doSomeWork(View view) {
         switch (view.getId()) {
             case R.id.text:
@@ -52,6 +52,10 @@ public class SkipExampleActivity extends AppCompatActivity {
             case R.id.text1:
                 textView.setText("");
                 sikpByTime();
+                break;
+            case R.id.text2:
+                textView.setText("");
+                sikpLast();
                 break;
             default:
                 break;
@@ -122,6 +126,40 @@ public class SkipExampleActivity extends AppCompatActivity {
             }
         })
                 .skip(1000, TimeUnit.MILLISECONDS)
+                .compose(RxUtil.applyObservableThread())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(ConstantValues.TAG, "onSubscribe:" + d.isDisposed());
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(ConstantValues.TAG, "onNext:" + integer);
+                        textView.append(integer + " ");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(ConstantValues.TAG, "onError:" + e.getMessage());
+                        textView.append(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(ConstantValues.TAG, "onComplete:");
+                    }
+                });
+    }
+
+    /**
+     * skipLast操作符，你可以忽略Observable发射的后N项数据，只保留之前的数据。
+     * skipLast（long, TimeUnit): skipLast的变体，这个变体接收一个时长，而不是数量参数。它会丢弃原始Observable结束的那段
+     * 时间发射的数据，时长和时间单位通过参数指定
+     */
+    private void sikpLast() {
+        Observable.just(1, 2, 3, 4, 5)
+                .skipLast(2)
                 .compose(RxUtil.applyObservableThread())
                 .subscribe(new Observer<Integer>() {
                     @Override
