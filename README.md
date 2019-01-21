@@ -74,6 +74,13 @@ buffer(count) 不传skip时，缓存的数据不会有重叠,等效于传递一�
 zip操作符返回一个Observable,它使用这个函数按顺序结合两个或多个Observables发射的数据项，然后
 它发射这个函数返回的结果；zip的最后一个参数接收每个Observable发射的数据，返回被压缩后的数据（最多可以有九个Observable参数）
 
+##### Merge的使用
+[Merge的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/MergeExampleActivity.java)
+- merge：合并多个Observable的发射物；任何一个原始的Observable的onError通知会被立即传递给观察者，而且会终止合并后的Observable。
+merge可能让合并的Observables发射的数据交错（类似的操作符Concat不会让数据交错，它会按顺序一个接一个发射多个Observables的发射物）
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/merge.c.png)
+- mergeWith: merge是静态方法，mergeWith是对象方法, Observable.merge(obser1, obser2)等价于Obser1.mergeWith(obser2)
+
 ### 过滤操作
 
 ##### Take的使用

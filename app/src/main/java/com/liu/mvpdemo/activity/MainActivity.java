@@ -15,6 +15,7 @@ import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
+import com.liu.mvpdemo.activity.operators.MergeExampleActivity;
 import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
 import com.liu.mvpdemo.activity.operators.ReplayExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text15:
+                intent = new Intent(this, MergeExampleActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
