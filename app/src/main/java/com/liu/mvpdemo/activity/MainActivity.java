@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.operators.BufferExampleActivity;
 import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
+import com.liu.mvpdemo.activity.operators.DeferExampleActivity;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6, R.id.text7, R.id.text8
-    , R.id.text9, R.id.text10, R.id.text11, R.id.text12, R.id.text13, R.id.text14, R.id.text15})
+            , R.id.text9, R.id.text10, R.id.text11, R.id.text12, R.id.text13, R.id.text14, R.id.text15, R.id.text16, R.id.text17
+            , R.id.text18, R.id.text19, R.id.text20, R.id.text21})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -122,6 +124,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text15:
+                intent = new Intent(this, MergeExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text16:
+                intent = new Intent(this, DeferExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text17:
+                intent = new Intent(this, ReduceExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text18:
+                intent = new Intent(this, FilterExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text19:
+                intent = new Intent(this, SkipExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text20:
+                intent = new Intent(this, ReplayExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text21:
                 intent = new Intent(this, MergeExampleActivity.class);
                 startActivity(intent);
                 break;

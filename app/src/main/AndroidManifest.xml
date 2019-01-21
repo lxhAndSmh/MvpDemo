@@ -27,7 +27,8 @@
         <activity android:name=".activity.operators.FilterExampleActivity" />
         <activity android:name=".activity.operators.SkipExampleActivity" />
         <activity android:name=".activity.operators.ReplayExampleActivity" />
-        <activity android:name=".activity.operators.MergeExampleActivity"></activity>
+        <activity android:name=".activity.operators.MergeExampleActivity" />
+        <activity android:name=".activity.operators.DeferExampleActivity"></activity>
     </application>
 
 </manifest>
