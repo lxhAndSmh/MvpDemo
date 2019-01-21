@@ -128,3 +128,11 @@ Concat操作符链接多个Observable的输出，第一个Observable发射的所
 注意：如果原始Observable没有发射任何数据，reduce抛出异常IllegalArgumentException
 - reduce(seed, Func2）：接受一个种子参数
 
+### 连接操作
+
+##### Replay
+[Replay的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/ReplayExampleActivity.java)
+- 保证所有的观察者收到相同的数据序列，即使它们在Observable开始发射数据之后才订阅。
+可连接的Observable（ConnectableObservable）与普通的Observable差不多，只不过它并不会在被订阅时开始发射数据，而是直接使用了Connect操作符时，才开始发射数据。
+- 变体replay(int)和replay(long， TimeUnit):指定replay的最大缓存量。
+

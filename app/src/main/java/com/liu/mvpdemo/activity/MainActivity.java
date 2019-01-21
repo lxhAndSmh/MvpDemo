@@ -16,6 +16,7 @@ import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
 import com.liu.mvpdemo.activity.operators.MapExampleActivity;
 import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
+import com.liu.mvpdemo.activity.operators.ReplayExampleActivity;
 import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
 import com.liu.mvpdemo.activity.operators.SkipExampleActivity;
 import com.liu.mvpdemo.activity.operators.TakeExampleActivity;
@@ -116,12 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text14:
-                intent = new Intent(this, BufferExampleActivity.class);
+                intent = new Intent(this, ReplayExampleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text15:
-                intent = new Intent(this, TakeExampleActivity.class);
-                startActivity(intent);
                 break;
             default:
                 break;

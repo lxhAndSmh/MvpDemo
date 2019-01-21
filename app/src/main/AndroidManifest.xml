@@ -25,7 +25,8 @@
         <activity android:name=".activity.operators.TakeExampleActivity" />
         <activity android:name=".activity.operators.ReduceExampleActivity" />
         <activity android:name=".activity.operators.FilterExampleActivity" />
-        <activity android:name=".activity.operators.SkipExampleActivity"></activity>
+        <activity android:name=".activity.operators.SkipExampleActivity" />
+        <activity android:name=".activity.operators.ReplayExampleActivity"></activity>
     </application>
 
 </manifest>
