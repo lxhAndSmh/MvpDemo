@@ -101,6 +101,10 @@ merge可能让合并的Observables发射的数据交错（类似的操作符Conc
 - akeLast（int）操作符：发射Observable的最后N项数据
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/takeLast.c.png)
 - 变体takeLast(long, TimeUnit): 这个变体接收的是一个时长而不是数量参数。它会发射Observable结束的那段时间发射的数据，时长和时间单位通过参数指定。
+- takeUntil：发送complete的结束条件，发送结束之前也会包括这个值
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/takeUntil.p.png)
+- takeWhile：当不满足这个条件时，会发送结束，切不包括这个值
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/takeWhile.c.png)
 
 ##### Filter的使用
 [Filter的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/FilterExampleActivity.java)
