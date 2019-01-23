@@ -124,6 +124,12 @@ merge可能让合并的Observables发射的数据交错（类似的操作符Conc
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipLast.c.png)
 - skipLast（long, TimeUnit): skipLast的变体，这个变体接收一个时长，而不是数量参数。它会丢弃原始Observable结束的那段时间发射的数据，时长和时间单位通过参数指定
 ![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipLast.t.png)
+- SkipUntil操作符，丢弃原始Observable发射的数据，直到第二个Observable发射了一项数据
+  SkipUntil订阅原始的Observable，但是忽略它的发射物，直到第二个Observable发射了一项数据那一刻，它开始发射原始Observable。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipUntil.c.png)
+- SkipWhile操作符，丢弃Observable发射的数据，直到一个指定的条件不成立。
+  SkipWhile订阅原始的Observable，但是忽略它的发射物，直到你指定的某个条件变为false的那一刻，它开始发射原始Observable
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/skipWhile.c.png)
 
 
 ### 算术和聚合操作
