@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.operators.BufferExampleActivity;
 import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
-import com.liu.mvpdemo.activity.operators.DeferExampleActivity;
+import com.liu.mvpdemo.activity.operators.CreationExampleActivity;
 import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
 import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
 import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text16:
-                intent = new Intent(this, DeferExampleActivity.class);
+                intent = new Intent(this, CreationExampleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text17:

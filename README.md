@@ -45,11 +45,37 @@ Single也可以组合使用多种操作，一些操作符让你可以混合使�
 使用场景:例如请求接口更新服务端数据，我们只需要知道是否更新成功，不需要知道更新后返回的数据。
 
 ### 创建操作
+[创建操作法的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/CreationExampleActivity.java)
 
 ##### Defer的使用
 直到有观察者订阅的时候才创建Observable（通过使用Observable工厂方法生成一个新的Observable），并且为每个观察者创建一个新的Observable。
 它对每个观察者都这样做，因此尽管每个订阅者都以为自己订阅的是同一个Observable，事实上每个订阅者获取的是它们自己单独的数据序列。
 在某些情况下，等待直到订阅发生时才生成Observable，可以确保Observable包含最新的数据。
+
+##### Interval的使用
+Interval操作符返回一个Observable，它按固定的时间间隔发射一个无限递增的整数序列(从0开始发射)。
+- interval(long, TimeUntil): 接受一个表示时间间隔的参数和一个表示时间单位的参数
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/interval.c.png)
+- interval(long, long, TimeUntil): 它在指定延迟之后发射零值，然后按照指定的时间间隔发射递增的数字。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/timer.p.png)
+
+##### Range的使用
+返回一个发射特定整数序列的Observable。
+rang操作符发射一个范围内的有序整数序列，可以指定范围的起始值和长度。
+rang(int, int):两个参数，一个是范围的起始值，一个是范围的数据的数目。如果第二个参数设为0，将导致Observable不发射任何数据（如果设置为负数，将抛异常）。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/range.png)
+
+##### Repeat的使用
+- repeat():重复地发射数据，它不是创建一个Observable，而是重复发射原始Observable的数据序列，这个序列是无限的。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/repeat.c.png)
+- repeat(n):指定重复的次数
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/repeat.o.png)
+- repeatWhen:它不是缓存和重放原始Observable的数据序列，而是有条件的重新订阅和发射原来的Observable。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/repeatWhen.f.png)
+
+##### Timer的使用
+创建一个Observable，它在一个给定的延迟后发射一个简单的数字0
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/timer.png)
 
 ### 变换操作
 
