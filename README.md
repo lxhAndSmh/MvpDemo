@@ -186,3 +186,19 @@ Concat操作符链接多个Observable的输出，第一个Observable发射的所
 可连接的Observable（ConnectableObservable）与普通的Observable差不多，只不过它并不会在被订阅时开始发射数据，而是直接使用了Connect操作符时，才开始发射数据。
 - 变体replay(int)和replay(long， TimeUnit):指定replay的最大缓存量。
 
+### 辅助操作
+
+##### Delay的使用
+
+延迟一段指定的时间再发射来自Observable的发射物。
+- delay(long, TimeUnit):Delay操作符让原始Observable在发射每项数据之前都暂停一段指定的时间段。效果是Observable发射的数据项
+在时间上向前整体平移了一个增量。
+（注意：delay不会平移onError通知，它会立即将这个通知传递给订阅者，同事丢弃任何发射onNext的通知。然而它会平移一个onCompleted通知）
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/delay.c.png)
+
+##### TimeOut的使用
+
+- timeout(long, TimeUnit): 对原始Observable的一个镜像，如果过了一个指定的时长仍没有发射数据，它会发射一个错误通知。
+![](https://mcxiaoke.gitbooks.io/rxdocs/content/images/operators/timeout.c.png)
+
+

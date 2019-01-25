@@ -274,4 +274,10 @@ public class CreationExampleActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
+    }
 }

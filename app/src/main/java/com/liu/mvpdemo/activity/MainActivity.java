@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
+import com.liu.mvpdemo.activity.operators.AssistExampleActivity;
 import com.liu.mvpdemo.activity.operators.BufferExampleActivity;
 import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
 import com.liu.mvpdemo.activity.operators.CreationExampleActivity;
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text17:
-                intent = new Intent(this, ReduceExampleActivity.class);
+                intent = new Intent(this, AssistExampleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text18:

@@ -28,7 +28,8 @@
         <activity android:name=".activity.operators.SkipExampleActivity" />
         <activity android:name=".activity.operators.ReplayExampleActivity" />
         <activity android:name=".activity.operators.MergeExampleActivity" />
-        <activity android:name=".activity.operators.CreationExampleActivity"></activity>
+        <activity android:name=".activity.operators.CreationExampleActivity" />
+        <activity android:name=".activity.operators.AssistExampleActivity"></activity>
     </application>
 
 </manifest>
