@@ -1,4 +1,9 @@
-# Rxjava的使用（所有示例基于rxjava2.0）
+# Rxjava的使用（所有示例基于RxJava2.0）
+
+学习的文档如下（感谢各位）：
+[扔物线的RxJava详解](http://gank.io/post/560e15be2dca930e00da1083#toc_8)
+[RxJava常用操作符的Demo](https://github.com/amitshekhariitbhu/RxJava2-Android-Samples)
+[RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
 
 ### Disposable的使用
 [Disposable的示例](https://github.com/lxhAndSmh/MvpDemo/blob/todo-mvp-retrofit-rxjava/app/src/main/java/com/liu/mvpdemo/activity/operators/DisposableExampleActivity.java)
