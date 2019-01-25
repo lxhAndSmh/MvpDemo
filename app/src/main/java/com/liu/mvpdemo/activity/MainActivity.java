@@ -24,6 +24,7 @@ import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
 import com.liu.mvpdemo.activity.operators.SkipExampleActivity;
 import com.liu.mvpdemo.activity.operators.TakeExampleActivity;
 import com.liu.mvpdemo.activity.operators.ZipExampleActivity;
+import com.liu.mvpdemo.activity.rxbus.RxbusActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.text18:
-                intent = new Intent(this, FilterExampleActivity.class);
+                intent = new Intent(this, RxbusActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text19:

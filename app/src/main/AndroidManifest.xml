@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MvpApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -29,7 +30,8 @@
         <activity android:name=".activity.operators.ReplayExampleActivity" />
         <activity android:name=".activity.operators.MergeExampleActivity" />
         <activity android:name=".activity.operators.CreationExampleActivity" />
-        <activity android:name=".activity.operators.AssistExampleActivity"></activity>
+        <activity android:name=".activity.operators.AssistExampleActivity" />
+        <activity android:name=".activity.rxbus.RxbusActivity"></activity>
     </application>
 
 </manifest>
