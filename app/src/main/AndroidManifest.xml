@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MvpApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -15,8 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AddTaskActivity" />
-        <activity android:name=".activity.TaskDetailActivity"></activity>
+        <activity android:name=".activity.operators.DisposableExampleActivity" />
+        <activity android:name=".activity.operators.FlowableExampleActivity" />
+        <activity android:name=".activity.operators.SingleObserverActivity" />
+        <activity android:name=".activity.operators.CompletableObserverExampleActivity" />
+        <activity android:name=".activity.operators.MapExampleActivity" />
+        <activity android:name=".activity.operators.ZipExampleActivity" />
+        <activity android:name=".activity.operators.BufferExampleActivity" />
+        <activity android:name=".activity.operators.TakeExampleActivity" />
+        <activity android:name=".activity.operators.ReduceExampleActivity" />
+        <activity android:name=".activity.operators.FilterExampleActivity" />
+        <activity android:name=".activity.operators.SkipExampleActivity" />
+        <activity android:name=".activity.operators.ReplayExampleActivity" />
+        <activity android:name=".activity.operators.MergeExampleActivity" />
+        <activity android:name=".activity.operators.CreationExampleActivity" />
+        <activity android:name=".activity.operators.AssistExampleActivity" />
+        <activity android:name=".activity.rxbus.RxbusActivity"></activity>
     </application>
 
 </manifest>

@@ -2,256 +2,286 @@ package com.liu.mvpdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
-import com.liu.mvpdemo.adapter.MainRecyclerAdapter;
-import com.liu.mvpdemo.adapter.clicklistener.MainRecyclerClickListener;
-import com.liu.mvpdemo.bean.Task;
-import com.liu.mvpdemo.constant.TasksFilterType;
-import com.liu.mvpdemo.contracts.MainContract;
-import com.liu.mvpdemo.data.TasksDataManager;
-import com.liu.mvpdemo.data.TasksDataSource;
-import com.liu.mvpdemo.data.local.TasksLocalDataSource;
-import com.liu.mvpdemo.presenters.MainPresenter;
+import com.liu.mvpdemo.activity.operators.AssistExampleActivity;
+import com.liu.mvpdemo.activity.operators.BufferExampleActivity;
+import com.liu.mvpdemo.activity.operators.CompletableObserverExampleActivity;
+import com.liu.mvpdemo.activity.operators.CreationExampleActivity;
+import com.liu.mvpdemo.activity.operators.DisposableExampleActivity;
+import com.liu.mvpdemo.activity.operators.FilterExampleActivity;
+import com.liu.mvpdemo.activity.operators.FlowableExampleActivity;
+import com.liu.mvpdemo.activity.operators.MapExampleActivity;
+import com.liu.mvpdemo.activity.operators.MergeExampleActivity;
+import com.liu.mvpdemo.activity.operators.ReduceExampleActivity;
+import com.liu.mvpdemo.activity.operators.ReplayExampleActivity;
+import com.liu.mvpdemo.activity.operators.SingleObserverActivity;
+import com.liu.mvpdemo.activity.operators.SkipExampleActivity;
+import com.liu.mvpdemo.activity.operators.TakeExampleActivity;
+import com.liu.mvpdemo.activity.operators.ZipExampleActivity;
+import com.liu.mvpdemo.activity.rxbus.RxbusActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeObserver;
+import io.reactivex.MaybeOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View{
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
-    private static final int REQUEST_CODE = 1;
-    private static final String TAG = MainActivity.class.getSimpleName();
-    @BindView(R.id.swipeRefresh)
-    SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.fad_add_task)
-    FloatingActionButton fabAddTask;
-    @BindView(R.id.filteringLabel)
-    TextView tvLabel;
-    @BindView(R.id.toobar)
-    Toolbar toolbar;
-    @BindView(R.id.tv_empty)
-    TextView tvEmpty;
+    @BindView(R.id.text_content)
+    TextView textContext;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
-    private MainContract.Presenter mPresenter;
-    private TasksDataSource mDataManager;
-
-    private MainRecyclerAdapter adapter;
+    private StringBuilder mStringBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-
-        mDataManager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
-        mPresenter = new MainPresenter(mDataManager, this);
-        initData();
+        mStringBuilder = new StringBuilder();
     }
 
-    public void initData(){
-        adapter = new MainRecyclerAdapter(MainActivity.this, new ArrayList<Task>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(adapter);
-        adapter.setItemClickListener(new MainRecyclerClickListener() {
-            @Override
-            public void onCompleteTaskClick(Task completedTask) {
-                mPresenter.completeTask(completedTask);
-            }
-
-            @Override
-            public void onActivateTaskClick(Task activatedTask) {
-                mPresenter.activateTask(activatedTask);
-            }
-
-            @Override
-            public void onOpenTaskDetialClick(Task detailTask) {
-                mPresenter.openTaskDetails(detailTask);
-            }
-
-            @Override
-            public void onItemClick(int position) {
-            }
-        });
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.loadTasks(false);
-            }
-        });
-
-        fabAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.addNewTask();
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.task_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menu_filter:
-                showFilteringPopUpMenu();
+    @OnClick({R.id.text, R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5, R.id.text6, R.id.text7, R.id.text8
+            , R.id.text9, R.id.text10, R.id.text11, R.id.text12, R.id.text13, R.id.text14, R.id.text15, R.id.text16, R.id.text17
+            , R.id.text18, R.id.text19, R.id.text20, R.id.text21})
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.text:
+                initFlowable();
                 break;
-            case R.id.menu_clear:
-                mPresenter.cleanCompletedTasks();
+            case R.id.text1:
+                initFlowableCreate();
                 break;
-            case R.id.menu_refresh:
-                mPresenter.loadTasks(false);
+            case R.id.text2:
+                initMaybe();
+                break;
+            case R.id.text3:
+                intent = new Intent(this, DisposableExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text4:
+                intent = new Intent(this, FlowableExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text5:
+                intent = new Intent(this, SingleObserverActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text6:
+                intent = new Intent(this, CompletableObserverExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text7:
+                intent = new Intent(this, MapExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text8:
+                intent = new Intent(this, ZipExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text9:
+                intent = new Intent(this, BufferExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text10:
+                intent = new Intent(this, TakeExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text11:
+                intent = new Intent(this, ReduceExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text12:
+                intent = new Intent(this, FilterExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text13:
+                intent = new Intent(this, SkipExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text14:
+                intent = new Intent(this, ReplayExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text15:
+                intent = new Intent(this, MergeExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text16:
+                intent = new Intent(this, CreationExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text17:
+                intent = new Intent(this, AssistExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text18:
+                intent = new Intent(this, RxbusActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text19:
+                intent = new Intent(this, SkipExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text20:
+                intent = new Intent(this, ReplayExampleActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text21:
+                intent = new Intent(this, MergeExampleActivity.class);
+                startActivity(intent);
+                break;
+            default:
                 break;
         }
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-            Log.d(TAG, "=====刷新=====");
-        }
-    }
-
-    @Override
-    public void showTasks(List<Task> tasks) {
-        recyclerView.setVisibility(View.VISIBLE);
-        tvEmpty.setVisibility(View.GONE);
-        adapter.replaceData(tasks);
-    }
-
-    @Override
-    public void showAddTask() {
-        Intent intent = new Intent(this, AddTaskActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    @Override
-    public void showTaskDetailsUi(String taskId) {
-        Intent intent = new Intent(this, TaskDetailActivity.class);
-        intent.putExtra("taskId", taskId);
-        startActivity(intent);
-    }
-
-    @Override
-    public void showLoadingTasksError() {
-        showEmptyMessage("加载失败");
-    }
-
-    @Override
-    public void showNoTasks() {
-        showEmptyMessage("暂时没有任何任务哦");
-    }
-
-    @Override
-    public void showNoActivedTasks() {
-        showEmptyMessage("暂时没有待完成的任务哦");
-    }
-
-    @Override
-    public void showNoCompletedTasks() {
-        showEmptyMessage("暂时没有已完成的任务哦");
     }
 
     /**
-     * 过滤条件的Menu弹窗
+     * Flowable/Subscriber
      */
-    @Override
-    public void showFilteringPopUpMenu() {
-        PopupMenu popMenu = new PopupMenu(this, findViewById(R.id.menu_filter));
-        popMenu.getMenuInflater().inflate(R.menu.filter_tasks, popMenu.getMenu());
+    private void initFlowable() {
+        Flowable.range(1, 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Integer>() {
+                    Subscription subscription;
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        //Subscription参数可以用去请求数据或者取消订阅
+                        Log.d(TAG, "onSubscribe start");
+                        mStringBuilder = new StringBuilder();
+                        subscription = s;
+                        s.request(1);
+                        Log.d(TAG, "onSubscribe end");
+                    }
 
-        popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(TAG, "onNext:" + integer);
+                        mStringBuilder.append(integer);
+                        subscription.request(1);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete");
+                        textContext.setText(mStringBuilder.toString());
+                        //取消订阅
+                        subscription.cancel();
+                    }
+                });
+    }
+
+    /**
+     * Flowable 通过create创建时要指定背压策略
+     */
+    private void initFlowableCreate() {
+        Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.all:
-                        mPresenter.setFiltering(TasksFilterType.ALL_TASKS);
-                        break;
-                    case R.id.active:
-                        mPresenter.setFiltering(TasksFilterType.ACTIVE_TASKS);
-                        break;
-                    case R.id.completed:
-                        mPresenter.setFiltering(TasksFilterType.COMPLETE_TASKS);
-                        break;
-                }
-                mPresenter.loadTasks(false);
-                return true;
+            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
+                emitter.onNext(1);
+                emitter.onNext(2);
+                emitter.onNext(3);
+                emitter.onNext(4);
+                emitter.onComplete();
             }
-        });
-        popMenu.show();
+        }, BackpressureStrategy.BUFFER)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(subscription -> {progressBar.setVisibility(View.VISIBLE);})
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        //确保再request（）之前已经完成所有的初始化工作，避免空指针问题
+                        mStringBuilder = new StringBuilder();
+                        s.request(4);
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        mStringBuilder.append(integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        textContext.setText(mStringBuilder.toString());
+//                        progressBar.setVisibility(View.GONE);
+
+                    }
+                });
     }
 
-    @Override
-    public void setLoadingIndicator(final boolean active) {
-        refreshLayout.post(new Runnable() {
+    /**
+     * Maybe/MaybeObaserver 不能用于发送大量数据，只用于发送单条数据（只想要某个事件的结果时，可以使用这个观察者模式）
+     */
+    private void initMaybe() {
+        Maybe.create(new MaybeOnSubscribe<Integer>() {
             @Override
-            public void run() {
-                refreshLayout.setRefreshing(active);
+            public void subscribe(MaybeEmitter<Integer> emitter) throws Exception {
+                // emitter.onSuccess(1) 和 emitter.onComplete()只能执行其中一个
+                emitter.onSuccess(1);
             }
-        });
-    }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MaybeObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe:" + d.isDisposed());
+                    }
 
-    @Override
-    public void showAllFilterLabel() {
-        showMessage("全部任务");
-    }
+                    @Override
+                    public void onSuccess(Integer integer) {
+                        if(integer == 1) {
+                            Log.d(TAG, "成功");
+                        }else {
+                            Log.d(TAG, "失败");
+                        }
+                    }
 
-    @Override
-    public void showActiveFilterLabel() {
-        showMessage("待完成的任务");
-    }
+                    @Override
+                    public void onError(Throwable e) {
 
-    @Override
-    public void showCompletedFilterLabel() {
-        showMessage("已完成的任务");
-    }
+                    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.start();   //每次进入该页面，就重新请求数据
-    }
-
-    @Override
-    public void setPresenter(@NonNull MainContract.Presenter presenter) {
-//        mPresenter = checkNotNull(presenter);
-    }
-
-    private void showMessage(String message){
-        tvLabel.setText(message);
-    }
-
-    private void showEmptyMessage(String emptyMessage){
-        recyclerView.setVisibility(View.GONE);
-        tvEmpty.setVisibility(View.VISIBLE);
-        tvEmpty.setText(emptyMessage);
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "结束");
+                    }
+                });
     }
 }
