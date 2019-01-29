@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.data.TasksDataManager;
-import com.liu.mvpdemo.data.local.TasksLocalDataSource;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +52,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     private void initData(){
         taskId = getIntent().getStringExtra("taskId");
-        manager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
+        manager = TasksDataManager.getInstance();
         mPresenter = new TaskDetailPresenter(manager, this);
         mPresenter.setTaskId(taskId);
         mPresenter.setDeatil();

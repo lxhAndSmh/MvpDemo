@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.data.TasksDataManager;
 import com.liu.mvpdemo.data.TasksDataSource;
-import com.liu.mvpdemo.data.local.TasksLocalDataSource;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +46,7 @@ public class AddTaskActivity extends AppCompatActivity implements AddTaskContrac
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        mDataManager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
+        mDataManager = TasksDataManager.getInstance();
         mPresent = new AddTaskPresenter(mDataManager, this);
 
         initData();

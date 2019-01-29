@@ -12,9 +12,7 @@ import java.util.NoSuchElementException;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -27,22 +25,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TasksDataManager implements TasksDataSource {
 
-    private static final String TAG = TasksDataManager.class.getSimpleName();
-
     private static TasksDataManager INSTANCE = null;
 
-    private final TasksDataSource localDataSource;
 
     Map<String, Task> mCachedTasks;
 
 
-    private TasksDataManager(@NonNull TasksDataSource localDataSource) {
-        this.localDataSource = checkNotNull(localDataSource);
+    private TasksDataManager() {
     }
 
-    public static TasksDataManager getInstance(TasksDataSource tasksLocalData) {
+    public static TasksDataManager getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new TasksDataManager(tasksLocalData);
+            INSTANCE = new TasksDataManager();
         }
         return INSTANCE;
     }
@@ -53,28 +47,12 @@ public class TasksDataManager implements TasksDataSource {
 
     @Override
     public Observable<List<Task>> getTasks() {
-        List<Task> tasks = new ArrayList<>();
 
         if (mCachedTasks != null) {
             return Observable.fromArray(new ArrayList<>(mCachedTasks.values()));
+        }else {
+            return Observable.fromArray(new ArrayList<>());
         }
-
-        return localDataSource.getTasks()
-                .doOnNext(new Consumer<List<Task>>() {
-                    @Override
-                    public void accept(List<Task> tasks) throws Exception {
-                        for(Task task : tasks) {
-                            mCachedTasks.put(task.getId(), task);
-                        }
-                    }
-                })
-                .filter(new Predicate<List<Task>>() {
-                    @Override
-                    public boolean test(List<Task> tasks) throws Exception {
-                        return tasks.isEmpty();
-                    }
-                });
-
     }
 
     @Override
@@ -102,9 +80,6 @@ public class TasksDataManager implements TasksDataSource {
     @Override
     public void saveTask(@NonNull Task task) {
         checkNotNull(task);
-        localDataSource.saveTask(task);
-
-        // Do in memory cache update to keep the app UI up to date
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
         }
@@ -114,7 +89,6 @@ public class TasksDataManager implements TasksDataSource {
     @Override
     public void completeTask(@NonNull Task task) {
         checkNotNull(task);
-        localDataSource.completeTask(task);
 
         Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
 
@@ -133,7 +107,6 @@ public class TasksDataManager implements TasksDataSource {
     @Override
     public void activeTask(@NonNull Task task) {
         checkNotNull(task);
-        localDataSource.activeTask(task);
 
         Task activeTask = new Task(task.getId(), task.getTitle(), task.getDescription());
 
@@ -151,9 +124,6 @@ public class TasksDataManager implements TasksDataSource {
 
     @Override
     public void clearCompletedTasks() {
-        localDataSource.clearCompletedTasks();
-
-        // Do in memory cache update to keep the app UI up to date
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
         }
@@ -168,7 +138,6 @@ public class TasksDataManager implements TasksDataSource {
 
     @Override
     public void deleteAllTasks() {
-        localDataSource.deleteAllTasks();
 
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
@@ -178,19 +147,8 @@ public class TasksDataManager implements TasksDataSource {
 
     @Override
     public void deleteTask(@NonNull String taskId) {
-        localDataSource.deleteTask(checkNotNull(taskId));
 
         mCachedTasks.remove(taskId);
-    }
-
-    private void refreshCache(List<Task> tasks) {
-        if (mCachedTasks == null) {
-            mCachedTasks = new LinkedHashMap<>();
-        }
-        mCachedTasks.clear();
-        for (Task task : tasks) {
-            mCachedTasks.put(task.getId(), task);
-        }
     }
 
     @Nullable
@@ -203,13 +161,4 @@ public class TasksDataManager implements TasksDataSource {
         }
     }
 
-    Observable<Task> getTaskWithIdFromLocalRepository(final String taskId){
-        return localDataSource.getTask(taskId).doOnNext(new Consumer<Task>() {
-
-            @Override
-            public void accept(Task task) throws Exception {
-                mCachedTasks.put(taskId, task);
-            }
-        });
-    }
 }

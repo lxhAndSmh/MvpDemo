@@ -26,7 +26,6 @@ import com.liu.mvpdemo.bean.Task;
 import com.liu.mvpdemo.constant.TasksFilterType;
 import com.liu.mvpdemo.data.TasksDataManager;
 import com.liu.mvpdemo.data.TasksDataSource;
-import com.liu.mvpdemo.data.local.TasksLocalDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        mDataManager = TasksDataManager.getInstance(TasksLocalDataSource.getInstance(this));
+        mDataManager = TasksDataManager.getInstance();
         mPresenter = new MainPresenter(mDataManager, this);
         initData();
     }

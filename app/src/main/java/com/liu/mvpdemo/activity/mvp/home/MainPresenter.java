@@ -149,6 +149,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void processTasks(List<Task> tasks){
+        mMainView.setLoadingIndicator(false);
         if(tasks.isEmpty()){
             showEmptyMessage();
         }else {
