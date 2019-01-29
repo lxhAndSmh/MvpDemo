@@ -14,4 +14,8 @@
         android:id="@+id/menu_refresh"
         android:title="刷新"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_rx_java"
+        android:title="RxJavaActivity"
+        app:showAsAction="never" />
 </menu>

@@ -44,8 +44,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+public class RxJavaActivity extends AppCompatActivity {
+    private static final String TAG = "RxJavaActivity";
 
     @BindView(R.id.text_content)
     TextView textContext;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rx_java);
         ButterKnife.bind(this);
         mStringBuilder = new StringBuilder();
     }
