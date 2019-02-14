@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RxJavaActivity"></activity>
+        <activity android:name=".activity.RxJavaActivity" />
         <activity android:name=".activity.operators.DisposableExampleActivity" />
         <activity android:name=".activity.operators.FlowableExampleActivity" />
         <activity android:name=".activity.operators.SingleObserverActivity" />
@@ -35,6 +35,7 @@
         <activity android:name=".activity.rxbus.RxbusActivity" />
         <activity android:name=".activity.mvp.addtask.AddTaskActivity" />
         <activity android:name=".activity.mvp.taskdetail.TaskDetailActivity" />
+        <activity android:name=".activity.mvp.login.LoginActivity"></activity>
     </application>
 
 </manifest>

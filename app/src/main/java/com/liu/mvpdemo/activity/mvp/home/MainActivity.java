@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.RxJavaActivity;
 import com.liu.mvpdemo.activity.mvp.addtask.AddTaskActivity;
+import com.liu.mvpdemo.activity.mvp.login.LoginActivity;
 import com.liu.mvpdemo.activity.mvp.taskdetail.TaskDetailActivity;
 import com.liu.mvpdemo.adapter.MainRecyclerAdapter;
 import com.liu.mvpdemo.adapter.clicklistener.MainRecyclerClickListener;
@@ -130,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 break;
             case R.id.menu_rx_java:
                 startActivity(new Intent(this, RxJavaActivity.class));
+                break;
+            case R.id.menu_login:
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:
                 break;

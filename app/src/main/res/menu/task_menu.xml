@@ -18,4 +18,9 @@
         android:id="@+id/menu_rx_java"
         android:title="RxJavaActivity"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_login"
+        android:title="登录"
+        app:showAsAction="never" />
 </menu>
