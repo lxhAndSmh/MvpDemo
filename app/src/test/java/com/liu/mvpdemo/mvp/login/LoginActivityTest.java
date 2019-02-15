@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.liu.mvpdemo.MvpApplication;
 import com.liu.mvpdemo.R;
 import com.liu.mvpdemo.activity.mvp.home.MainActivity;
 import com.liu.mvpdemo.activity.mvp.login.LoginActivity;
@@ -17,6 +16,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowToast;
 
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
@@ -26,7 +26,7 @@ import static org.robolectric.Shadows.shadowOf;
  * @date 2019/2/11
  */
 
-@Config(application = MvpApplication.class)
+@Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
 public class LoginActivityTest {
     private EditText nameEt;
@@ -47,6 +47,7 @@ public class LoginActivityTest {
         nameEt.setText("liuxuhui");
         passwordEt.setText("123456");
         button.performClick();
+        //Activity跳转的测试
         Intent expectedIntent = new Intent(activity, MainActivity.class);
         Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
         assertEquals(expectedIntent.getComponent(), actual.getComponent());
@@ -57,5 +58,7 @@ public class LoginActivityTest {
         nameEt.setText("Tony");
         passwordEt.setText("123456");
         button.performClick();
+        //Toast测试
+        assertEquals("登录失败", ShadowToast.getTextOfLatestToast());
     }
 }
