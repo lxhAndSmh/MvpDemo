@@ -30,7 +30,7 @@ public class LoginPresenterTest {
 
     @Test
     public void testLogin() {
-        presenter.confimUser("liuxuhui", "123456");
+        presenter.confirmUser("liuxuhui", "123456");
         verify(view).loginSuccess();
     }
 

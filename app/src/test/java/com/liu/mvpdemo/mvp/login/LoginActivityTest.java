@@ -1,6 +1,7 @@
 package com.liu.mvpdemo.mvp.login;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +17,11 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowToast;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.robolectric.Shadows.shadowOf;
 
 /**
@@ -60,5 +63,13 @@ public class LoginActivityTest {
         button.performClick();
         //Toast测试
         assertEquals("登录失败", ShadowToast.getTextOfLatestToast());
+    }
+
+    /**
+     * Dialog测试
+     */
+    public void testDialog(){
+        Dialog dialog = ShadowDialog.getLatestDialog();
+        assertNotNull(dialog);
     }
 }

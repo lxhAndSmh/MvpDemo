@@ -17,6 +17,7 @@ public interface LoginContract {
          * 登录失败
          */
         void loginFailed();
+
     }
 
     interface Presenter {
@@ -25,6 +26,6 @@ public interface LoginContract {
          * @param name
          * @param password
          */
-        void confimUser(String name, String password);
+        void confirmUser(String name, String password);
     }
 }

@@ -16,7 +16,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void confimUser(String name, String password) {
+    public void confirmUser(String name, String password) {
         if(DEFAULT_NAME.equals(name) && DEFAULT_PASSWORD.equals(password)) {
             mView.loginSuccess();
         }else {
