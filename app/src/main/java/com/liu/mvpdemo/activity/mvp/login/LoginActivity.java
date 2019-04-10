@@ -25,13 +25,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public EditText passwordEt;
 
     private LoginContract.Presenter mPresenter;
+    private LoginContract.Model mModel;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mPresenter = new LoginPresenter(this);
+        mModel = new LoginModel();
+        mPresenter = new LoginPresenter(this, mModel);
     }
 
     @OnClick(R.id.button9)

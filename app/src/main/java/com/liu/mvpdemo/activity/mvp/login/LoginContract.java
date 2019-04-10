@@ -20,6 +20,15 @@ public interface LoginContract {
 
     }
 
+    interface Model {
+        /**
+         * 模拟网路请求
+         * @param name
+         * @param password
+         */
+        void uploadUserInfo(String name, String password, NetworCallBack callBack);
+    }
+
     interface Presenter {
         /**
          * 用户校验

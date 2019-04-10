@@ -1,5 +1,9 @@
 package com.liu.mvpdemo.activity.mvp.login;
 
+import android.util.Log;
+
+import com.liu.mvpdemo.activity.util.ConstantValues;
+
 /**
  * @author liuxuhui
  * @date 2019/2/11
@@ -10,9 +14,11 @@ public class LoginPresenter implements LoginContract.Presenter {
     private final static String DEFAULT_PASSWORD = "123456";
 
     private LoginContract.View mView;
+    private LoginContract.Model mModel;
 
-    public LoginPresenter(LoginContract.View mView) {
+    public LoginPresenter(LoginContract.View mView, LoginContract.Model mModel) {
         this.mView = mView;
+        this.mModel = mModel;
     }
 
     @Override
@@ -22,5 +28,19 @@ public class LoginPresenter implements LoginContract.Presenter {
         }else {
             mView.loginFailed();
         }
+    }
+
+    public void longinByNetwork(String name, String password) {
+        mModel.uploadUserInfo(name, password, new NetworCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                Log.d(ConstantValues.TAG, "onSuccess:" + data.toString());
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(ConstantValues.TAG, msg + code);
+            }
+        });
     }
 }
