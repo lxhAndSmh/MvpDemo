@@ -14,8 +14,10 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -72,6 +74,30 @@ public class LoginPresenterTest {
             }
         }).when(model).uploadUserInfo(anyString(), anyString(), any(NetworCallBack.class));
         //当model调用uploadUserInfo方法时，也会执行answer里的代码
-        presenter.longinByNetwork("liu", "123");
+        presenter.loginByNetwork("liu", "123");
+    }
+
+    /**
+     * mock对象如果不指定特定的行为，一个mock对象的所有非void方法都将返回默认值：int、long将返回0，boolean类型返回false，对象方法返回null，void方法什么都不做；
+     * spy对象，除非指定特定行为，默认情况下，spy对象会调用这个方法的真实逻辑，并返回相应的值。
+     *
+     * spy与mock的唯一区别就是默认行为不一样：spy对象的方法默认调用真实的逻辑，mock对象的方法默认什么都不做，或直接返回默认值
+     */
+    @Test
+    public void testSpyCheckInfo() {
+
+        //在默认情况下，spy对象会调用这个类的真实逻辑，并返回相应的返回值
+        LoginPresenter presenterSpy = Mockito.spy(LoginPresenter.class);
+        assertEquals(true, presenterSpy.checkoutInfo("liuxuhui", "123456"));
+        assertEquals(false, presenterSpy.checkoutInfo("liuxuhui", "12345"));
+
+        //spy对象的方法也可以验证指定特定的行为
+        Mockito.when(presenterSpy.checkoutInfo("1", "2")).thenReturn(true);
+        assertEquals(true, presenterSpy.checkoutInfo("1", "2"));
+
+
+        //验证spy对象的方法调用情况（即调用次数）
+        presenterSpy.checkoutInfo("liuxuhui", "12345");
+        Mockito.verify(presenterSpy, times(2)).checkoutInfo("liuxuhui", "12345");
     }
 }

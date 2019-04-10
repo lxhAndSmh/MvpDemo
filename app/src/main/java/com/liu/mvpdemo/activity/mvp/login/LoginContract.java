@@ -36,5 +36,12 @@ public interface LoginContract {
          * @param password
          */
         void confirmUser(String name, String password);
+
+        /**
+         * 模拟网络请求登录
+         * @param name
+         * @param password
+         */
+        void loginByNetwork(String name, String password);
     }
 }

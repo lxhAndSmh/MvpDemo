@@ -16,6 +16,9 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View mView;
     private LoginContract.Model mModel;
 
+    public LoginPresenter() {
+    }
+
     public LoginPresenter(LoginContract.View mView, LoginContract.Model mModel) {
         this.mView = mView;
         this.mModel = mModel;
@@ -30,7 +33,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
     }
 
-    public void longinByNetwork(String name, String password) {
+    @Override
+    public void loginByNetwork(String name, String password) {
         mModel.uploadUserInfo(name, password, new NetworCallBack() {
             @Override
             public void onSuccess(Object data) {
@@ -42,5 +46,13 @@ public class LoginPresenter implements LoginContract.Presenter {
                 Log.d(ConstantValues.TAG, msg + code);
             }
         });
+    }
+
+    public boolean checkoutInfo(String name, String password) {
+        if(DEFAULT_NAME.equals(name) && DEFAULT_PASSWORD.equals(password)) {
+            return true;
+        }else {
+            return false;
+        }
     }
 }
