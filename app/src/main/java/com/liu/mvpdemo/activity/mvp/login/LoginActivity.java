@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @OnClick(R.id.button9)
     public void login() {
-        mPresenter.confirmUser(nameEt.getText().toString(), passwordEt.getText().toString());
+        mPresenter.loginByNetwork(nameEt.getText().toString(), passwordEt.getText().toString());
     }
 
     @Override

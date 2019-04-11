@@ -15,14 +15,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowToast;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.robolectric.Shadows.shadowOf;
 
 /**
  * @author liuxuhui
@@ -37,14 +37,23 @@ public class LoginActivityTest {
     private Button button;
     private Activity activity;
 
+    /**
+     * 创建activity的实例
+     * setupActivity is Deprecated
+     * 替代方法 Robolectric.buildActivity(LoginActivity.class).create().get();
+     */
     @Before
     public void setUp() {
-        activity = Robolectric.setupActivity(LoginActivity.class);
+//        activity = Robolectric.setupActivity(LoginActivity.class);
+        activity = Robolectric.buildActivity(LoginActivity.class).create().get();
         nameEt = activity.findViewById(R.id.editText);
         passwordEt = activity.findViewById(R.id.editText2);
         button = activity.findViewById(R.id.button9);
     }
 
+    /**
+     * 测试登录成功，跳转下一页
+     */
     @Test
     public void loginSuccess() {
         nameEt.setText("liuxuhui");
@@ -52,10 +61,15 @@ public class LoginActivityTest {
         button.performClick();
         //Activity跳转的测试
         Intent expectedIntent = new Intent(activity, MainActivity.class);
-        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
+//        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
+        ShadowActivity shadowActivity = Shadows.shadowOf(activity);
+        Intent actual = shadowActivity.getNextStartedActivity();
         assertEquals(expectedIntent.getComponent(), actual.getComponent());
     }
 
+    /**
+     * 测试登录失败，吐司提示
+     */
     @Test
     public void loginFail(){
         nameEt.setText("Tony");

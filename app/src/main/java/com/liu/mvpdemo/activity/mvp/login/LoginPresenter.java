@@ -39,11 +39,13 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onSuccess(Object data) {
                 Log.d(ConstantValues.TAG, "onSuccess:" + data.toString());
+                mView.loginSuccess();
             }
 
             @Override
             public void onFail(int code, String msg) {
                 Log.d(ConstantValues.TAG, msg + code);
+                mView.loginFailed();
             }
         });
     }
