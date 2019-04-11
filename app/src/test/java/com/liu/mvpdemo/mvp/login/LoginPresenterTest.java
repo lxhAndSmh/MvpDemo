@@ -72,7 +72,7 @@ public class LoginPresenterTest {
                     throw new RuntimeException();
                 }
             }
-        }).when(model).uploadUserInfo(anyString(), anyString(), any(NetworCallBack.class));
+        }).when(model).uploadUserInfoByThread(anyString(), anyString(), any(NetworCallBack.class));
         //当model调用uploadUserInfo方法时，也会执行answer里的代码
         presenter.loginByNetwork("liu", "123");
     }

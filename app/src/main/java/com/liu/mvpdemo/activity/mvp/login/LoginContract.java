@@ -1,5 +1,8 @@
 package com.liu.mvpdemo.activity.mvp.login;
 
+
+import io.reactivex.Observable;
+
 /**
  * @author liuxuhui
  * @date 2019/2/11
@@ -26,7 +29,8 @@ public interface LoginContract {
          * @param name
          * @param password
          */
-        void uploadUserInfo(String name, String password, NetworCallBack callBack);
+        Observable<String> uploadUserInfo(String name, String password);
+        void uploadUserInfoByThread(String name, String password, NetworCallBack callBack);
     }
 
     interface Presenter {

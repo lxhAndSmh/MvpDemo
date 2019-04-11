@@ -35,7 +35,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void loginByNetwork(String name, String password) {
-        mModel.uploadUserInfo(name, password, new NetworCallBack() {
+        mModel.uploadUserInfoByThread(name, password, new NetworCallBack() {
             @Override
             public void onSuccess(Object data) {
                 Log.d(ConstantValues.TAG, "onSuccess:" + data.toString());
