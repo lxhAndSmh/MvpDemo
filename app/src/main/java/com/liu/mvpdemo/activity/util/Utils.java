@@ -5,6 +5,7 @@ import com.liu.mvpdemo.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author liuxuhui
@@ -128,5 +129,22 @@ public class Utils {
             }
         }
         return userWhoLovesBoth;
+    }
+
+    public static String generateNewUUId() {
+        return UUID.randomUUID().toString();
+    }
+
+    public boolean callPrivateMethod() {
+        return isExist();
+    }
+
+    private boolean isExist() {
+        return false;
+    }
+
+    public final boolean isAlive() {
+        // do something
+        return false;
     }
 }

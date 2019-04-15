@@ -100,5 +100,4 @@ public class LoginPresenterTest {
         presenterSpy.checkoutInfo("liuxuhui", "12345");
         Mockito.verify(presenterSpy, times(2)).checkoutInfo("liuxuhui", "12345");
     }
-
 }

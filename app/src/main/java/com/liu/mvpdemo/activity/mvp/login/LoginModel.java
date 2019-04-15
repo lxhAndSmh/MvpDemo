@@ -1,6 +1,7 @@
 package com.liu.mvpdemo.activity.mvp.login;
 
 import com.liu.mvpdemo.activity.util.RxUtil;
+import com.liu.mvpdemo.activity.util.Utils;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -54,5 +55,13 @@ public class LoginModel implements LoginContract.Model {
                 }
             }
         }).start();
+    }
+
+    public String printUUID() {
+        return Utils.generateNewUUId();
+    }
+
+    public boolean callFinalMethod(Utils utils) {
+        return utils.isAlive();
     }
 }
