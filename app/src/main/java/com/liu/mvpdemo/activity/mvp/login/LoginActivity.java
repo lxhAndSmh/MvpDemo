@@ -52,4 +52,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void loginFailed() {
         Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
     }
+
+    public void setData(String name) {
+        nameEt.setText(name);
+    }
 }

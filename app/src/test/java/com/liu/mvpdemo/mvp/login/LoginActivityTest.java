@@ -1,6 +1,5 @@
 package com.liu.mvpdemo.mvp.login;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.widget.Button;
@@ -35,7 +34,7 @@ public class LoginActivityTest {
     private EditText nameEt;
     private EditText passwordEt;
     private Button button;
-    private Activity activity;
+    private LoginActivity activity;
 
     /**
      * 创建activity的实例
@@ -46,8 +45,8 @@ public class LoginActivityTest {
     public void setUp() {
 //        activity = Robolectric.setupActivity(LoginActivity.class);
         activity = Robolectric.buildActivity(LoginActivity.class).create().get();
-        nameEt = activity.findViewById(R.id.editText);
-        passwordEt = activity.findViewById(R.id.editText2);
+        nameEt = activity.nameEt;
+        passwordEt = activity.passwordEt;
         button = activity.findViewById(R.id.button9);
     }
 
@@ -85,5 +84,11 @@ public class LoginActivityTest {
     public void testDialog(){
         Dialog dialog = ShadowDialog.getLatestDialog();
         assertNotNull(dialog);
+    }
+
+    @Test
+    public void testData() {
+        activity.setData("2");
+        assertEquals("2", nameEt.getText().toString());
     }
 }
