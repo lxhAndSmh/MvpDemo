@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setSupportActionBar(toolbar);
 
         mDataManager = TasksDataManager.getInstance();
-        mPresenter = new MainPresenter(mDataManager, this);
+        mPresenter = new MainPresenter(mDataManager, this, this);
         initData();
     }
 
@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 break;
             case R.id.menu_rx_java:
                 startActivity(new Intent(this, RxJavaActivity.class));
+                break;
+            case R.id.bind_service:
+                mPresenter.bindAidlService();
                 break;
             case R.id.menu_login:
                 startActivity(new Intent(this, LoginActivity.class));

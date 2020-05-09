@@ -107,6 +107,11 @@ public interface MainContract {
         void setFiltering(TasksFilterType filterType);
 
         TasksFilterType getFilterType();
+
+        /**
+         * 绑定服务，远程服务 AIDL、IPC
+         */
+        void bindAidlService();
     }
 
 }

@@ -1,7 +1,14 @@
 package com.liu.mvpdemo.activity.mvp.home;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
+import com.botpy.sourcecodedemo.aidl.AIDL_Service;
 import com.liu.mvpdemo.activity.util.ConstantValues;
 import com.liu.mvpdemo.activity.util.RxUtil;
 import com.liu.mvpdemo.bean.Task;
@@ -31,15 +38,16 @@ public class MainPresenter implements MainContract.Presenter {
     private final TasksDataSource mTasksDataManager;
 
     private final MainContract.View mMainView;
+    private MainActivity context;
 
     private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
 
     private boolean mFirstLoad = true;
 
-    public MainPresenter(TasksDataSource mTasksDataManager, MainContract.View mMainView) {
+    public MainPresenter(TasksDataSource mTasksDataManager, MainContract.View mMainView, MainActivity context) {
         this.mTasksDataManager = checkNotNull(mTasksDataManager, "数据管理类不能为空");
         this.mMainView = checkNotNull(mMainView, "mMainView 不能为空");
-
+        this.context = context;
         mMainView.setPresenter(this);
     }
 
@@ -93,6 +101,18 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public TasksFilterType getFilterType() {
         return mCurrentFiltering;
+    }
+
+    @Override
+    public void bindAidlService() {
+        System.out.println("--AIDL_SERVICE--" + "点击了绑定按钮");
+        //通过 Intent 指定服务端的服务名称和所在的包，与远程Service进行绑定
+        //参数与服务器端的action要一致
+        Intent intent = new Intent("com.botpy.sourcecodedemo.aidl.AIDL_Service");
+        //Android 5.0之后无法通过隐式 Intent 绑定远程 Service，需要通过 setPackage() 方法指定包名
+        intent.setPackage("com.botpy.sourcecodedemo.service");
+        //绑定服务
+        context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -185,5 +205,32 @@ public class MainPresenter implements MainContract.Presenter {
                 break;
         }
     }
+
+    private AIDL_Service mService;
+    private ServiceConnection connection = new ServiceConnection() {
+        /**
+         * 在 Activity 与 Service 建立关联的时候调用
+         * @param name
+         * @param service
+         */
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            System.out.println("--AIDL_SERVICE--" + "ComponentName: " + name + "   IBinder: " + service.toString());
+            mService = AIDL_Service.Stub.asInterface(service);
+            try {
+                mService.AIDL_service();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        /**
+         * 在 Activity 与 Service 建立关联和解除关联的时候调用
+         * @param name
+         */
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            System.out.println("--AIDL_SERVICE--" + "ComponentName: " + name);
+        }
+    };
 }
 

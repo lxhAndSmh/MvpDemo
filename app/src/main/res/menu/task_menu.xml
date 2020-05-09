@@ -18,7 +18,10 @@
         android:id="@+id/menu_rx_java"
         android:title="RxJavaActivity"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/bind_service"
+        android:title="绑定服务"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_login"
         android:title="登录"
